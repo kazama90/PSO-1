@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Projekt_PSO
+namespace Infrastruktura.Regions
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for OnePanelRegion.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OnePanelRegion : UserControl
     {
-        public MainWindow()
+        public OnePanelRegion()
         {
             InitializeComponent();
         }

@@ -2,6 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projekt_PSO", "Projekt_PSO\Projekt_PSO.csproj", "{6BBFD5D8-3792-459D-BDAF-D2B5A5070051}"
+	ProjectSection(ProjectDependencies) = postProject
+		{953EAED8-0EE3-4D61-A931-E5585C9CC4AD} = {953EAED8-0EE3-4D61-A931-E5585C9CC4AD}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSO", "PSO\PSO.csproj", "{953EAED8-0EE3-4D61-A931-E5585C9CC4AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastruktura", "Infrastruktura\Infrastruktura.csproj", "{53948FF6-EC5C-46FE-BCC7-B22136BDEF14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +20,14 @@ Global
 		{6BBFD5D8-3792-459D-BDAF-D2B5A5070051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BBFD5D8-3792-459D-BDAF-D2B5A5070051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BBFD5D8-3792-459D-BDAF-D2B5A5070051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{953EAED8-0EE3-4D61-A931-E5585C9CC4AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{953EAED8-0EE3-4D61-A931-E5585C9CC4AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{953EAED8-0EE3-4D61-A931-E5585C9CC4AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{953EAED8-0EE3-4D61-A931-E5585C9CC4AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53948FF6-EC5C-46FE-BCC7-B22136BDEF14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53948FF6-EC5C-46FE-BCC7-B22136BDEF14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53948FF6-EC5C-46FE-BCC7-B22136BDEF14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53948FF6-EC5C-46FE-BCC7-B22136BDEF14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

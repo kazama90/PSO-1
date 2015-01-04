@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Infrastruktura.Regions.TwoPanelRegion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:rgn="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="7"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl Grid.Column="0" rgn:RegionManager.RegionName="LeftPanelContent"
+                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                        VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+
+        </ContentControl>
+
+        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+
+        <ContentControl Grid.Column="2" rgn:RegionManager.RegionName="RightPanelContent"
+                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                        VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+
+        </ContentControl>
+    </Grid>
+</UserControl>
