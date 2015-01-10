@@ -16,15 +16,26 @@ namespace Infrastruktura.Ribbon
     {
         #region Ctor
 
-        public RibbonTabVM()
-            : base(null, null)
+        public RibbonTabVM(IUnityContainer container, IEventAggregator eventAggregator)
         {
-
+            this.GlobalEventAggregator = eventAggregator;
+            this.Container = container;
         }
 
         #endregion Ctor
 
         #region Properties
+
+        string _contextualTabGroupHeader;
+        public string ContextualTabGroupHeader
+        {
+            get { return _contextualTabGroupHeader; }
+            set
+            {
+                _contextualTabGroupHeader = value;
+                RaisePropertyChanged();
+            }
+        }
 
         ObservableCollection<RibbonGroupVM> _groups;
         public ObservableCollection<RibbonGroupVM> Groups
@@ -36,13 +47,15 @@ namespace Infrastruktura.Ribbon
 
         #region Methods
 
-        public RibbonGroupVM GetOrCreateGroup(string header)
+        public IRibbonGroup GetOrCreateGroup(string header)
         {
             var group = Groups.FirstOrDefault(x => x.Header == header);
             if (group != null)
                 return group;
 
-            group = new RibbonGroupVM { Header = header };
+            group = this.Container.Resolve<RibbonGroupVM>();
+            group.Header = header;
+            //group = new RibbonGroupVM { Header = header };
             _groups.Add(group);
 
             return group;

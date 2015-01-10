@@ -1,5 +1,7 @@
 ﻿using Infrastruktura.Common.BaseClasses;
 using Infrastruktura.Interfaces;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,10 +16,11 @@ namespace Infrastruktura.Ribbon
     public class RibbonGroupVM : BaseVM, IRibbonGroup
     {
         #region Ctor
-        
-        public RibbonGroupVM()
-        {
 
+        public RibbonGroupVM(IUnityContainer container, IEventAggregator eventAggregator)
+        {
+            this.GlobalEventAggregator = eventAggregator;
+            this.Container = container;
         }
 
         #endregion Ctor

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSO.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,14 @@ namespace PSO.Views
     /// </summary>
     public partial class SettingsView : UserControl
     {
-        public SettingsView()
+        public SettingsView(SettingsVM viewModel)
         {
             InitializeComponent();
+
+            this.Loaded += (s, e) =>
+            {
+                this.DataContext = viewModel;
+            };
         }
     }
 }

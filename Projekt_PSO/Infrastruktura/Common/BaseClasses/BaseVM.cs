@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Events;
+﻿using Infrastruktura.Interfaces;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,11 @@ namespace Infrastruktura.Common.BaseClasses
 
         public BaseVM(IUnityContainer container, IEventAggregator eventAggregator)
         {
-            this.EventAggregator = eventAggregator;
+            this.GlobalEventAggregator = eventAggregator;
             this.Container = container;
+            this.Ribbon = container.Resolve<IRibbon>();
+
+            Initialize();
         }
 
         public BaseVM()
@@ -40,10 +44,20 @@ namespace Infrastruktura.Common.BaseClasses
             }
         }
 
-        protected IEventAggregator EventAggregator { get; set; }
-
         protected IUnityContainer Container { get; set; }
 
+        protected IEventAggregator GlobalEventAggregator { get; set; }
+
+        protected IEventAggregator EventAggregator { get; set; }
+
+        protected IRibbon Ribbon { get; set; }
+
         #endregion Properties
+
+        #region Methods
+
+        protected virtual void Initialize() { }
+
+        #endregion Methods
     }
 }

@@ -58,9 +58,10 @@
     <Compile Include="Common\PropertyChangedImplementation.cs" />
     <Compile Include="Constants\InstanceNames.cs" />
     <Compile Include="Constants\RegionNames.cs" />
-    <Compile Include="Interfaces\IRibbon.cs" />
-    <Compile Include="Interfaces\IRibbonGroup.cs" />
-    <Compile Include="Interfaces\IRibbonTab.cs" />
+    <Compile Include="Ribbon\Interfaces\IRibbon.cs" />
+    <Compile Include="Ribbon\Interfaces\IRibbonGroup.cs" />
+    <Compile Include="Ribbon\Interfaces\IRibbonTab.cs" />
+    <Compile Include="Ribbon\Interfaces\IRibbonTabGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions\OnePanelRegion.xaml.cs">
       <DependentUpon>OnePanelRegion.xaml</DependentUpon>
@@ -71,6 +72,7 @@
     <Compile Include="Regions\TwoPanelRegion.xaml.cs">
       <DependentUpon>TwoPanelRegion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ribbon\RibbonTabGroupVM.cs" />
     <Compile Include="Ribbon\RibbonButtonVM.cs" />
     <Compile Include="Ribbon\RibbonGroupVM.cs" />
     <Compile Include="Ribbon\RibbonTabVM.cs" />

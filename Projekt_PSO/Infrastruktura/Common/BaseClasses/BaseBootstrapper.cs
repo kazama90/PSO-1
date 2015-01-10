@@ -44,7 +44,11 @@ namespace Infrastruktura.Common.BaseClasses
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            this.Container.RegisterInstance<IRibbon>(new RibbonVM(), new ContainerControlledLifetimeManager());
+
+            this.Container.RegisterType<IRibbon, RibbonVM>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IRibbonTabGroup, RibbonTabGroupVM>();
+            this.Container.RegisterType<IRibbonTab, RibbonTabVM>();
+            this.Container.RegisterType<IRibbonGroup, RibbonGroupVM>();
         }
     }
 }

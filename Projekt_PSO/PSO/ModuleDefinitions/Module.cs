@@ -28,15 +28,6 @@ namespace PSO.ModuleDefinitions
         {
             _regionManager.RegisterViewWithRegion(RegionNames.LeftPanelContent, typeof(SettingsView));
             _regionManager.RegisterViewWithRegion(RegionNames.RightPanelContent, typeof(PlotView));
-
-            // inicjalizacja przycisków na ribbonie
-            var ribbonViewModel = _container.Resolve<IRibbon>();
-            var tab = ribbonViewModel.GetOrCreateTab("taka tam zakładka");
-            var group = tab.GetOrCreateGroup("taka tam grupa");
-            group.AddControl(new RibbonButton
-            {
-                Label = "taki tam button"
-            });
         }
     }
 }
