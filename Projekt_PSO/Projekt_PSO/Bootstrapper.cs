@@ -10,6 +10,8 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Infrastruktura.Views;
 using System.Windows;
+using Microsoft.Practices.Prism.Events;
+using PSO.ViewModels;
 
 namespace Projekt_PSO
 {
@@ -18,6 +20,8 @@ namespace Projekt_PSO
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+
+            this.Container.RegisterInstance<IEventAggregator>("PSO", new EventAggregator());
         }
 
         protected override void InitializeShell()
@@ -31,5 +35,6 @@ namespace Projekt_PSO
             App.Current.MainWindow.Title = "Implementacja algorytmu PSO";
             App.Current.MainWindow.Show();
         }
+
     }
 }

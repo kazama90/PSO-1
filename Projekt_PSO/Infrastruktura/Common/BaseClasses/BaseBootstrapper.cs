@@ -13,6 +13,7 @@ using Infrastruktura.Interfaces;
 using Infrastruktura.Ribbon;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Events;
 
 namespace Infrastruktura.Common.BaseClasses
 {
@@ -44,7 +45,12 @@ namespace Infrastruktura.Common.BaseClasses
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            this.Container.RegisterInstance<IRibbon>(new RibbonVM(), new ContainerControlledLifetimeManager());
+            
+            this.Container.RegisterInstance<IEventAggregator>(new EventAggregator());
+            this.Container.RegisterType<IRibbon, RibbonVM>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IRibbonTabGroup, RibbonTabGroupVM>();
+            this.Container.RegisterType<IRibbonTab, RibbonTabVM>();
+            this.Container.RegisterType<IRibbonGroup, RibbonGroupVM>();
         }
     }
 }

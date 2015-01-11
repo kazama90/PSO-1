@@ -16,15 +16,26 @@ namespace Infrastruktura.Ribbon
     {
         #region Ctor
 
-        public RibbonTabVM()
-            : base(null, null)
+        public RibbonTabVM(IUnityContainer container, IEventAggregator eventAggregator)
         {
-
+            this.GlobalEventAggregator = eventAggregator;
+            this.Container = container;
         }
 
         #endregion Ctor
 
         #region Properties
+
+        string _contextualTabGroupHeader;
+        public string ContextualTabGroupHeader
+        {
+            get { return _contextualTabGroupHeader; }
+            set
+            {
+                _contextualTabGroupHeader = value;
+                RaisePropertyChanged();
+            }
+        }
 
         ObservableCollection<RibbonGroupVM> _groups;
         public ObservableCollection<RibbonGroupVM> Groups
@@ -32,20 +43,37 @@ namespace Infrastruktura.Ribbon
             get { return _groups ?? (_groups = new ObservableCollection<RibbonGroupVM>()); }
         }
 
+        public string Name { get; set; }
+
         #endregion Properties
 
         #region Methods
 
-        public RibbonGroupVM GetOrCreateGroup(string header)
+        public IRibbonGroup GetOrCreateGroup(string name, string header)
         {
-            var group = Groups.FirstOrDefault(x => x.Header == header);
+            return GetOrCreateGroup(name, header, false);
+        }
+
+        private IRibbonGroup GetOrCreateGroup(string name, string header, bool findOnly)
+        {
+            var group = Groups.FirstOrDefault(x => x.Name == name);
             if (group != null)
                 return group;
 
-            group = new RibbonGroupVM { Header = header };
+            if (findOnly)
+                return null;
+
+            group = this.Container.Resolve<RibbonGroupVM>();
+            group.Header = header;
+            group.Name = name;
             _groups.Add(group);
 
             return group;
+        }
+
+        public IRibbonGroup GetOrCreateGroup(string name)
+        {
+            return this.GetOrCreateGroup(name, null, true);
         }
 
         #endregion Methods

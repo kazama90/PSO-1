@@ -6,8 +6,21 @@
              xmlns:ribbon="clr-namespace:Infrastruktura.Ribbon">
     <Grid>
         <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            
+            <LinearGradientBrush x:Key="TabsGradientBackground" StartPoint="0, 0.5" EndPoint="1, 0.5">
+                <GradientStop Color="White" Offset="0"/>
+                <GradientStop Color="Gray" Offset="1" />
+            </LinearGradientBrush>
+            
+            <!-- RibbonContextualTabGroup -->
+            <Style TargetType="{x:Type RibbonContextualTabGroup}">
+                <Setter Property="Header" Value="{Binding Header}" />
+                <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </Style>
             <!-- RibbonTab -->
             <Style TargetType="{x:Type RibbonTab}">
+                <Setter Property="ContextualTabGroupHeader" Value="{Binding ContextualTabGroupHeader}"/>
                 <Setter Property="Header" Value="{Binding Header}" />
                 <Setter Property="ItemsSource" Value="{Binding Groups}" />
             </Style>
@@ -26,7 +39,14 @@
             </Style>
         </Grid.Resources>
 
-        <Ribbon x:Name="mainRibbon" ItemsSource="{Binding Tabs, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
-        
+        <Ribbon x:Name="mainRibbon" ItemsSource="{Binding Tabs, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Background="{StaticResource TabsGradientBackground}"
+                ContextualTabGroupsSource="{Binding ContextualTabGroups, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem Command="{Binding ExitCommand}" Header="Wyjdź" ImageSource="pack://application:,,,/PSO;component/Resources/Images/exit.png" Width="Auto"/>
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+        </Ribbon>
+
     </Grid>
 </UserControl>

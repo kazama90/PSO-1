@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Infrastruktura.Common.BaseClasses;
+using PSO.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +20,17 @@ namespace PSO.Views
     /// <summary>
     /// Interaction logic for SettingsView.xaml
     /// </summary>
-    public partial class SettingsView : UserControl
+    public partial class SettingsView : BaseView
     {
-        public SettingsView()
+        public SettingsView(SettingsVM viewModel)
+            : base(viewModel)
         {
             InitializeComponent();
+
+            //this.Loaded += (s, e) =>
+            //{
+            //    this.DataContext = viewModel;
+            //};
         }
     }
 }
