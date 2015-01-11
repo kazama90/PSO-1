@@ -67,8 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\RibbonNames.cs" />
-    <Compile Include="Controls\ObservableLineSeries.cs" />
-    <Compile Include="Controls\PlottingView.cs" />
     <Compile Include="Events\GeneratePlotEvent.cs" />
     <Compile Include="Events\Payloads\GeneratePlotPayload.cs" />
     <Compile Include="ModuleDefinitions\Module.cs" />
