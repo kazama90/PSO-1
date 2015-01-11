@@ -14,12 +14,25 @@ namespace Infrastruktura.Interfaces
         /// Nagłówek zakładki
         /// </summary>
         string Header { get; set; }
+
+        /// <summary>
+        /// Nagłówek grupy kontekstowych zakładek, o ile przynależy do takiej
+        /// </summary>
         string ContextualTabGroupHeader { get; set; }
+
         /// <summary>
         /// Zwraca lub dodaje nową grupę
         /// </summary>
+        /// <param name="name">Nazwa identyfikująca grupę</param>
         /// <param name="header">Nagłówek grupy</param>
-        /// <returns>Obiekt dodanej lub istniejącej grupy</returns>
-        IRibbonGroup GetOrCreateGroup(string header);
+        /// <returns>Obiekt grupy</returns>
+        IRibbonGroup GetOrCreateGroup(string name, string header);
+
+        /// <summary>
+        /// Pobiera grupę o wskazanej nazwie
+        /// </summary>
+        /// <param name="name">Nazwa identyfikująca grupę</param>
+        /// <returns>Jeśli odnaleziono grupę, to jej obiekt lub null w przeciwnym przypadku</returns>
+        IRibbonGroup GetOrCreateGroup(string name);
     }
 }

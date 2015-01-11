@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 
 namespace Infrastruktura.Interfaces
@@ -13,16 +14,31 @@ namespace Infrastruktura.Interfaces
         /// <summary>
         /// Zwraca lub dodaje nową zakładkę
         /// </summary>
+        /// <param name="name">Nazwa identyfikująca zakładkę</param>
         /// <param name="header">Nagłówek zakładki</param>
-        /// <returns>Obiekt dodanej lub istniejącej zakładki</returns>
-        IRibbonTab GetOrCreateTab(string header);
+        /// <returns>Obiekt zakładki</returns>
+        IRibbonTab GetOrCreateTab(string name, string header);
+
+        /// <summary>
+        /// Pobiera zakładkę o wskazanej nazwie
+        /// </summary>
+        /// <param name="name">Nazwa identyfikująca zakładkę</param>
+        /// <returns>Jeśli odnaleziono zakładkę, to jej obiekt lub null w przeciwnym przypadku</returns>
+        IRibbonTab GetOrCreateTab(string name);
 
         /// <summary>
         /// Zwraca lub dodaje kontekstową zakładkę
         /// </summary>
         /// <param name="header">Nagłówek zakładki</param>
-        /// <returns>Obiekt dodanej lub istniejącej zakładki kontekstowej</returns>
+        /// <returns>Obiekt zakładki kontekstowej</returns>
         [Obsolete("Jak na razie nie działa...", true)]
         IRibbonTabGroup GetOrCreateContextualTabGroup(string header);
+
+        /// <summary>
+        /// Szuka elementu (buttona, itp.) o wskazanej nazwie
+        /// </summary>
+        /// <param name="name">Nazwa elementu</param>
+        /// <returns>Jeśli odnaleziono element, to jego obiekt lub null w przeciwnym przypadku</returns>
+        ContentControl GetElement(string name);
     }
 }

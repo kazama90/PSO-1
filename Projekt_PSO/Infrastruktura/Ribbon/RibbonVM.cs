@@ -1,6 +1,7 @@
 ﻿using Infrastruktura.Common;
 using Infrastruktura.Common.BaseClasses;
 using Infrastruktura.Interfaces;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using System;
@@ -9,6 +10,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Infrastruktura.Ribbon
 {
@@ -42,19 +45,33 @@ namespace Infrastruktura.Ribbon
 
         #region Methods
 
-        public IRibbonTab GetOrCreateTab(string header)
+        public IRibbonTab GetOrCreateTab(string name, string header)
+        {
+            return GetOrCreateTab(name, header, false);
+        }
+
+        public IRibbonTab GetOrCreateTab(string name)
+        {
+            return GetOrCreateTab(name, null, true);
+        }
+
+        private IRibbonTab GetOrCreateTab(string name, string header, bool findOnly)
         {
             if (header == null)
                 throw new ArgumentNullException("Nie można dodać zakładki do ribbona bez określania jej nagłówka");
 
             // sprawdzenie, czy zakładka już istnieje
-            var tab = Tabs.FirstOrDefault(x => x.Header == header);
+            var tab = Tabs.FirstOrDefault(x => x.Name == name);
             if (tab != null)
                 return tab;
+
+            if (findOnly)
+                return null;
 
             // stworzenie obiektu zakładki i dodanie do kolekcji
             tab = this.Container.Resolve<RibbonTabVM>();
             tab.Header = header;
+            tab.Name = name;
             //tab = new RibbonTabVM(this.Container, this.EventAggregator) { Header = header };
             Tabs.Add(tab);
 
@@ -84,6 +101,31 @@ namespace Infrastruktura.Ribbon
             return tabGroup;
         }
 
+        public ContentControl GetElement(string name)
+        {
+            foreach (var tab in Tabs)
+                foreach (var group in tab.Groups)
+                    foreach (var item in group.Controls)
+                        if (item.Name == name)
+                            return item;
+
+            return null;
+        }
+
         #endregion Methods
+
+        #region Commands
+
+        DelegateCommand _exitCommand;
+        public DelegateCommand ExitCommand
+        {
+            get { return _exitCommand ?? (_exitCommand = new DelegateCommand(ExitCommandExecute)); }
+        }
+        void ExitCommandExecute()
+        {
+            Application.Current.Shutdown();
+        }
+
+        #endregion Commands
     }
 }

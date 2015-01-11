@@ -11,6 +11,7 @@ using Microsoft.Practices.Unity;
 using Infrastruktura.Views;
 using System.Windows;
 using Microsoft.Practices.Prism.Events;
+using PSO.ViewModels;
 
 namespace Projekt_PSO
 {
@@ -20,7 +21,6 @@ namespace Projekt_PSO
         {
             base.ConfigureContainer();
 
-            this.Container.RegisterInstance<IEventAggregator>(new EventAggregator());
             this.Container.RegisterInstance<IEventAggregator>("PSO", new EventAggregator());
         }
 

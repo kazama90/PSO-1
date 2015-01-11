@@ -43,22 +43,37 @@ namespace Infrastruktura.Ribbon
             get { return _groups ?? (_groups = new ObservableCollection<RibbonGroupVM>()); }
         }
 
+        public string Name { get; set; }
+
         #endregion Properties
 
         #region Methods
 
-        public IRibbonGroup GetOrCreateGroup(string header)
+        public IRibbonGroup GetOrCreateGroup(string name, string header)
         {
-            var group = Groups.FirstOrDefault(x => x.Header == header);
+            return GetOrCreateGroup(name, header, false);
+        }
+
+        private IRibbonGroup GetOrCreateGroup(string name, string header, bool findOnly)
+        {
+            var group = Groups.FirstOrDefault(x => x.Name == name);
             if (group != null)
                 return group;
 
+            if (findOnly)
+                return null;
+
             group = this.Container.Resolve<RibbonGroupVM>();
             group.Header = header;
-            //group = new RibbonGroupVM { Header = header };
+            group.Name = name;
             _groups.Add(group);
 
             return group;
+        }
+
+        public IRibbonGroup GetOrCreateGroup(string name)
+        {
+            return this.GetOrCreateGroup(name, null, true);
         }
 
         #endregion Methods

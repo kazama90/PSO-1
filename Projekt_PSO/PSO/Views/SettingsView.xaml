@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="PSO.Views.SettingsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+﻿<v:BaseView x:Class="PSO.Views.SettingsView"
+          xmlns:v="clr-namespace:Infrastruktura.Common.BaseClasses;assembly=Infrastruktura"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+          xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
     <Grid>
         <Button Content="Xyz button test" Width="100" Height="30" Command="{Binding StartStopCommand}"/>
     </Grid>
-</UserControl>
+</v:BaseView>

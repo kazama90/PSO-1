@@ -54,8 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BaseClasses\BaseBootstrapper.cs" />
+    <Compile Include="Common\BaseClasses\BaseView.cs" />
     <Compile Include="Common\BaseClasses\BaseVM.cs" />
     <Compile Include="Common\PropertyChangedImplementation.cs" />
+    <Compile Include="Common\ResourceHelper.cs" />
     <Compile Include="Constants\InstanceNames.cs" />
     <Compile Include="Constants\RegionNames.cs" />
     <Compile Include="Ribbon\Interfaces\IRibbon.cs" />
@@ -84,7 +86,7 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Events\Payloads\" />
-    <Folder Include="Services\" />
+    <Folder Include="Services\Interfaces\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
   </ItemGroup>

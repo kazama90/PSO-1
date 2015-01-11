@@ -33,6 +33,8 @@ namespace Infrastruktura.Ribbon
             get { return _controls ?? (_controls = new ObservableCollection<ContentControl>()); }
         }
 
+        public string Name { get; set; }
+
         #endregion Properties
 
         #region Methods

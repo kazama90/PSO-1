@@ -17,9 +17,15 @@ namespace Infrastruktura.Common.BaseClasses
         {
             this.GlobalEventAggregator = eventAggregator;
             this.Container = container;
-            this.Ribbon = container.Resolve<IRibbon>();
 
-            Initialize();
+            var stringNamespace = this.GetType().Namespace;
+            var topNamespace = stringNamespace.Substring(0, stringNamespace.IndexOf("."));
+
+            if (container != null)
+            {
+                this.Ribbon = container.Resolve<IRibbon>();
+                this.EventAggregator = container.Resolve<IEventAggregator>(topNamespace);
+            }
         }
 
         public BaseVM()
@@ -56,7 +62,9 @@ namespace Infrastruktura.Common.BaseClasses
 
         #region Methods
 
-        protected virtual void Initialize() { }
+        public virtual void Initialize() { }
+
+        public virtual void RefreshView() { }
 
         #endregion Methods
     }

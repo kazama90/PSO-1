@@ -8,10 +8,14 @@ namespace PSO.Constants
 {
     public class RibbonNames
     {
-        // zakładka Sterowanie
-        public const string ControlTab = "Sterowanie";
-        public const string StartStopGroup = "Start/stop";
-        public const string StartButton = "Start";
-        public const string StopButton = "Stop";
+        // Sterowanie
+        public const string ControlTab = "ControlTab";
+        public const string StartStopGroup = "StartStopGroup";
+        public const string StartButton = "StartButton";
+
+        // Wykresy
+        public const string PlotsGroup = "PlotsGroup";
+        public const string PlotButton = "PlotButton";
+
     }
 }

@@ -1,7 +1,13 @@
-﻿using Infrastruktura.Common.BaseClasses;
+﻿using Infrastruktura.Common;
+using Infrastruktura.Common.BaseClasses;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using OxyPlot;
+using OxyPlot.Series;
+using PSO.Constants;
+using PSO.Events;
+using PSO.Events.Payloads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,38 +20,47 @@ namespace PSO.ViewModels
 {
     public class SettingsVM : BaseVM
     {
+        #region Ctor
+
         public SettingsVM(IUnityContainer container, IEventAggregator eventAggregator)
             : base(container, eventAggregator)
         {
             this.EventAggregator = container.Resolve<IEventAggregator>("PSO");
         }
 
-        protected override void Initialize()
+        #endregion Ctor
+
+        #region Properties
+
+        #endregion Properties
+
+        #region Event handlers
+
+
+
+        #endregion Event handlers
+
+        #region Methods
+
+        public override void Initialize()
         {
-            var tab = this.Ribbon.GetOrCreateTab("settingsTab");
-            var group = tab.GetOrCreateGroup("settingsGroup");
+            var tab = this.Ribbon.GetOrCreateTab(RibbonNames.ControlTab, "Sterowanie PSO");
+            var group = tab.GetOrCreateGroup(RibbonNames.StartStopGroup, "Sterowanie");
             group.AddControl(new RibbonButton
             {
-                Label = "xyz",
+                Name = RibbonNames.StartButton,
+                Label = "Uruchom",
+                LargeImageSource = ResourceHelper.GetImage(this.GetType().Namespace, "start.png"),
                 Command = StartStopCommand
             });
-
-            //var contextualTab = this.Ribbon.GetOrCreateContextualTabGroup("contextualSettingsTabGroup");
-            //var tab2 = this.Ribbon.GetOrCreateTab("contextualSettingsTab");
-            //tab2.ContextualTabGroupHeader = "contextualSettingsTabGroup";
-            //var group2 = tab2.GetOrCreateGroup("contextualSettingsGroup");
-            //group2.AddControl(new RibbonButton
-            //{
-            //    Label = "contextualXyz2",
-            //    Command = StartStopCommand
-            //});
-            //contextualTab.IsVisible = true;
         }
+
+        #endregion Methods
 
         #region Commands
 
-        ICommand _startStopCommand;
-        public ICommand StartStopCommand
+        DelegateCommand _startStopCommand;
+        public DelegateCommand StartStopCommand
         {
             get
             {
@@ -55,7 +70,40 @@ namespace PSO.ViewModels
         }
         void StartStopCommandExecute()
         {
-            System.Windows.MessageBox.Show("button zadziałał");
+            this.EventAggregator.GetEvent<GeneratePlotEvent>().Publish(
+                new GeneratePlotPayload
+                {
+                    Title = "Wykres zbieżności",
+                    LineSeries = new List<LineSeries>
+                    {
+                        new LineSeries
+                        {
+                            ItemsSource = new List<DataPoint>
+                            {
+                                new DataPoint(1,1),
+                                new DataPoint(2,2),
+                                new DataPoint(3,5),
+                                new DataPoint(4,9),
+                                new DataPoint(5,14)
+                            },
+                            Title = "funkcja 1"
+                        },
+                        new LineSeries
+                        {
+                            ItemsSource = new List<DataPoint>
+                            {
+                                new DataPoint(0,1),
+                                new DataPoint(1,3),
+                                new DataPoint(1,5),
+                                new DataPoint(2,7),
+                                new DataPoint(2,9)
+                            },
+                            Title = "funkcja 2"
+                        }
+                    }
+                });
+
+            //System.Windows.MessageBox.Show("button zadziałał");
         }
         bool StartStopCommandCanExecute()
         {
