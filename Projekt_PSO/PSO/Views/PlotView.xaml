@@ -4,8 +4,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:oxy="http://oxyplot.org/wpf"
-            xmlns:ctl="clr-namespace:PSO.Controls">
+            xmlns:oxy="http://oxyplot.org/wpf">
     <v:BaseView.Resources>
         <LinearGradientBrush x:Key="gridBackground" StartPoint="0.5, 0" EndPoint="0.5, 0">
             <GradientStop Offset="0" Color="#C4C4C4"/>
@@ -27,9 +26,7 @@
         </TextBlock>
         <TabControl Grid.Row="1">
             <TabItem Header="Zbieżności"><!--DataContext="{Binding ConvergencePlotViewModel, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"-->
-                <oxy:PlotView Model="{Binding ConvergencePlot}">
-                    
-                </oxy:PlotView>
+                <oxy:PlotView Model="{Binding ConvergencePlot}" />
                 <!--<oxy:PlotView Title="{Binding Header}">
                     <oxy:PlotView.Series>
                         <oxy:LineSeries ItemsSource="{Binding Points}"/>

@@ -29,5 +29,5 @@ namespace Infrastruktura.Common.BaseClasses
 
             Loaded -= InitialLoad;
         }
-    }
+    }   
 }

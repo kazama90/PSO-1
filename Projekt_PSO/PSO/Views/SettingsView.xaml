@@ -5,6 +5,9 @@
           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
           xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
     <Grid>
-        <Button Content="Xyz button test" Width="100" Height="30" Command="{Binding StartStopCommand}"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding BackgroundImg, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Opacity="0.3"/>
+        </Grid.Background>
+        <Button Content="Xyz button test" Width="100" Height="30" Command="{Binding TloCommand}"/>
     </Grid>
 </v:BaseView>

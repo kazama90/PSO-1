@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace PSO.ViewModels
 {
@@ -25,12 +26,25 @@ namespace PSO.ViewModels
         public SettingsVM(IUnityContainer container, IEventAggregator eventAggregator)
             : base(container, eventAggregator)
         {
-            this.EventAggregator = container.Resolve<IEventAggregator>("PSO");
         }
 
         #endregion Ctor
 
         #region Properties
+
+        BitmapImage _backgroundImg;
+        public BitmapImage BackgroundImg
+        {
+            get { return _backgroundImg; }
+            set
+            {
+                if (_backgroundImg == value)
+                    return;
+
+                _backgroundImg = value;
+                RaisePropertyChanged();
+            }
+        }
 
         #endregion Properties
 
@@ -108,6 +122,21 @@ namespace PSO.ViewModels
         bool StartStopCommandCanExecute()
         {
             return true;
+        }
+
+        DelegateCommand _tloCommand;
+        public DelegateCommand TloCommand
+        {
+             get
+             {
+                 return _tloCommand ?? (_tloCommand = new DelegateCommand(() =>
+                 {
+                     if (BackgroundImg == null)
+                         BackgroundImg = ResourceHelper.GetImage(this.GetType().Namespace, "rastrigin.png");
+                     else
+                         BackgroundImg = null;
+                 }));
+             }
         }
 
         #endregion Commands
