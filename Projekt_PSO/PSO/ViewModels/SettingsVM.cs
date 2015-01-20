@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 using OxyPlot;
 using OxyPlot.Series;
 using PSO.Constants;
+using PSO.Enums;
 using PSO.Events;
 using PSO.Events.Payloads;
 using System;
@@ -42,6 +43,28 @@ namespace PSO.ViewModels
                     return;
 
                 _backgroundImg = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public IEnumerable<ValueDescription> MathFunctionsList
+        {
+            get
+            {
+                return EnumHelper.GetAllValuesAndDescriptions<MathFunctions>();
+            }
+        }
+
+        MathFunctions _selectedMathFunction;
+        public MathFunctions SelectedMathFunction
+        {
+            get { return _selectedMathFunction; }
+            set
+            {
+                if (_selectedMathFunction == value)
+                    return;
+
+                _selectedMathFunction = value;
                 RaisePropertyChanged();
             }
         }

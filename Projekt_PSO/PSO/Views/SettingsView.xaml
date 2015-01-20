@@ -8,6 +8,91 @@
         <Grid.Background>
             <ImageBrush ImageSource="{Binding BackgroundImg, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Opacity="0.3"/>
         </Grid.Background>
-        <Button Content="Xyz button test" Width="100" Height="30" Command="{Binding TloCommand}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Funkcje -->
+        <GroupBox Grid.Row="0" Header="Funkcje" Margin="5,0,5,5" Padding="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Text="Funkcja" Grid.Row="0" Grid.Column="0"/>
+                <ComboBox Grid.Row="0" Grid.Column="2"
+                          ItemsSource="{Binding MathFunctionsList}"
+                          SelectedValue="{Binding SelectedMathFunction}"
+                          SelectedValuePath="Value"
+                          DisplayMemberPath="Description"/>
+                
+                <TextBlock Text="Liczba iteracji" Grid.Row="2" Grid.Column="0"/>
+                <Slider Grid.Row="2" Grid.Column="2"/>
+                <TextBlock Grid.Row="2" Grid.Column="4" />
+
+                <TextBlock Text="Liczba cząsteczek" Grid.Row="4" Grid.Column="0"/>
+                <Slider Grid.Row="4" Grid.Column="2"/>
+                <TextBlock Grid.Row="4" Grid.Column="4" />
+            </Grid>
+        </GroupBox>
+        
+        <!-- Parametry -->
+        <GroupBox Grid.Row="1" Header="Parametry" Margin="5,0,5,5" Padding="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="c1" Grid.Row="0" Grid.Column="0"/>
+                <Slider Grid.Row="0" Grid.Column="2"/>
+                <TextBlock Grid.Row="0" Grid.Column="4" />
+
+                <TextBlock Text="c2" Grid.Row="2" Grid.Column="0"/>
+                <Slider Grid.Row="2" Grid.Column="2"/>
+                <TextBlock Grid.Row="2" Grid.Column="4" />
+
+                <TextBlock Text="Vmax" Grid.Row="4" Grid.Column="0"/>
+                <Slider Grid.Row="4" Grid.Column="2"/>
+                <TextBlock Grid.Row="4" Grid.Column="4" />
+            </Grid>
+        </GroupBox>
+        
+        <!-- Dodatki -->
+        <GroupBox Grid.Row="2" Header="Dodatkowe ustawienia" Margin="5,0,5,5" Padding="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <CheckBox Content="Ścisk" Grid.Row="0" Grid.Column="0"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </v:BaseView>
