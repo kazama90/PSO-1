@@ -27,16 +27,6 @@
         <TabControl Grid.Row="1">
             <TabItem Header="Zbieżności"><!--DataContext="{Binding ConvergencePlotViewModel, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"-->
                 <oxy:PlotView Model="{Binding ConvergencePlot}" />
-                <!--<oxy:PlotView Title="{Binding Header}">
-                    <oxy:PlotView.Series>
-                        <oxy:LineSeries ItemsSource="{Binding Points}"/>
-                    </oxy:PlotView.Series>
-                </oxy:PlotView>-->
-                <!--<ctl:PlottingView>
-                    <ctl:PlottingView.Series>
-                        <ctl:ObservableLineSeries ItemsSource="{Binding Points}"/>
-                    </ctl:PlottingView.Series>
-                </ctl:PlottingView>-->
             </TabItem>
             <!--<TabItem Header="Inne">
                 

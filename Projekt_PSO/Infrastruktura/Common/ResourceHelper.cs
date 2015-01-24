@@ -18,7 +18,7 @@ namespace Infrastruktura.Common
         public static BitmapImage GetImage(string projNamespace, string imgName)
         {
             string uri = string.Format("pack://application:,,,/{0};component/Resources/Images/{1}", projNamespace.Substring(0, projNamespace.IndexOf(".")), imgName);
-
+            var temp = new Uri(uri);
             return new BitmapImage(new Uri(uri));
         }
     }

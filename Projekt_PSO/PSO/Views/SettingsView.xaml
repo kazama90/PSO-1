@@ -34,13 +34,13 @@
                 
                 <TextBlock Text="Funkcja" Grid.Row="0" Grid.Column="0"/>
                 <ComboBox Grid.Row="0" Grid.Column="2"
-                          ItemsSource="{Binding MathFunctionsList}"
-                          SelectedValue="{Binding SelectedMathFunction}"
+                          ItemsSource="{Binding Path=MathFunctionsList}"
+                          SelectedValue="{Binding MathFunction}"
                           SelectedValuePath="Value"
                           DisplayMemberPath="Description"/>
                 
                 <TextBlock Text="Liczba iteracji" Grid.Row="2" Grid.Column="0"/>
-                <Slider Grid.Row="2" Grid.Column="2"/>
+                <Slider Grid.Row="2" Grid.Column="2" Value="{Binding Settings.IterationCount}"/>
                 <TextBlock Grid.Row="2" Grid.Column="4" />
 
                 <TextBlock Text="Liczba cząsteczek" Grid.Row="4" Grid.Column="0"/>

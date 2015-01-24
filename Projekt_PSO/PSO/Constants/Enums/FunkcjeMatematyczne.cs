@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Infrastruktura.Common;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +9,11 @@ namespace PSO.Enums
 {
     public enum MathFunctions
     {
-        [DescriptionAttribute("Rastrigin")]
+        [MathFuncDescAttribute("Rastrigin", "rastrigin.png")]
         Rastrigin,
-        [DescriptionAttribute("Ackley")]
+        [MathFuncDescAttribute("Ackley", "ackley.png")]
         Ackley,
-        [DescriptionAttribute("Rosenbrock")]
+        [MathFuncDescAttribute("Rosenbrock", "rosenbrock.png")]
         Rosenbrock
     }
 }

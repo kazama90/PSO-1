@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 using OxyPlot;
 using OxyPlot.Series;
 using PSO.Constants;
+using PSO.DataModels;
 using PSO.Enums;
 using PSO.Events;
 using PSO.Events.Payloads;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -33,17 +35,35 @@ namespace PSO.ViewModels
 
         #region Properties
 
-        BitmapImage _backgroundImg;
-        public BitmapImage BackgroundImg
+        object _backgroundImg;
+        public object BackgroundImg
         {
-            get { return _backgroundImg; }
+            get
+            {
+                try
+                {
+                    return ResourceHelper.GetImage(this.GetType().Namespace, EnumHelper.GetImageUri(MathFunction));
+                }
+                catch(ArgumentException e)
+                {
+                    MessageBox.Show("Ładowanie tła zakończone niepowodzeniem", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return null;
+                }
+            }
+        }
+
+        MathFunctions _mathFunction;
+        public MathFunctions MathFunction
+        {
+            get { return _mathFunction; }
             set
             {
-                if (_backgroundImg == value)
+                if (_mathFunction == value)
                     return;
 
-                _backgroundImg = value;
+                _mathFunction = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(() => BackgroundImg);
             }
         }
 
@@ -55,19 +75,7 @@ namespace PSO.ViewModels
             }
         }
 
-        MathFunctions _selectedMathFunction;
-        public MathFunctions SelectedMathFunction
-        {
-            get { return _selectedMathFunction; }
-            set
-            {
-                if (_selectedMathFunction == value)
-                    return;
-
-                _selectedMathFunction = value;
-                RaisePropertyChanged();
-            }
-        }
+        AlgorithmSettings Settings { get; set; }
 
         #endregion Properties
 
@@ -154,10 +162,10 @@ namespace PSO.ViewModels
              {
                  return _tloCommand ?? (_tloCommand = new DelegateCommand(() =>
                  {
-                     if (BackgroundImg == null)
-                         BackgroundImg = ResourceHelper.GetImage(this.GetType().Namespace, "rastrigin.png");
-                     else
-                         BackgroundImg = null;
+                     //if (BackgroundImg == null)
+                     //    BackgroundImg = ResourceHelper.GetImage(this.GetType().Namespace, "rastrigin.png");
+                     //else
+                     //    BackgroundImg = null;
                  }));
              }
         }

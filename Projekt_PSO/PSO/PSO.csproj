@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Enums\FunkcjeMatematyczne.cs" />
+    <Compile Include="DataModels\AlgorithmSettings.cs" />
     <Compile Include="ModuleDefinitions\Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\RibbonNames.cs" />
@@ -102,13 +103,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataModels\" />
     <Folder Include="Services\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\ackley.png" />
+    <Resource Include="Resources\Images\rosenbrock.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

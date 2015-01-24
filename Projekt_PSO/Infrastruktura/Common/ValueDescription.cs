@@ -9,5 +9,6 @@ namespace Infrastruktura.Common
     {
         public Enum Value { get; set; }
         public string Description { get; set; }
+        public string ImageUri { get; set; }
     }
 }

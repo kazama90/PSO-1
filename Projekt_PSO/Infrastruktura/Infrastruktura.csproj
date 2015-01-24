@@ -56,7 +56,8 @@
     <Compile Include="Common\BaseClasses\BaseBootstrapper.cs" />
     <Compile Include="Common\BaseClasses\BaseView.cs" />
     <Compile Include="Common\BaseClasses\BaseVM.cs" />
-    <Compile Include="Common\EnumToItemsSource.cs" />
+    <Compile Include="Common\EnumHelper.cs" />
+    <Compile Include="Common\MathFuncDescAttribute.cs" />
     <Compile Include="Common\PropertyChangedImplementation.cs" />
     <Compile Include="Common\ResourceHelper.cs" />
     <Compile Include="Common\ValueDescription.cs" />
