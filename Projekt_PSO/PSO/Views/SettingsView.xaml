@@ -28,6 +28,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -61,17 +63,21 @@
                         
                         <RadioButton GroupName="rbCzasWykGroup" Content="Liczba iteracji" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Settings.IsLiczbaIteracji}"/>
                         <Slider Grid.Row="0" Grid.Column="2" Value="{Binding Settings.IterationCount}" SmallChange="1000" LargeChange="100000" Minimum="1" Maximum="1000000000"/>
-                        <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.IterationCount, StringFormat={}{0:D10}}" />
+                        <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.IterationCount, StringFormat={}{0:D10}}" TextAlignment="Right" />
 
                         <RadioButton GroupName="rbCzasWykGroup" Content="Czas (sekundy)" Grid.Row="2" Grid.Column="0" IsChecked="{Binding Settings.IsLiczbaIteracji, Converter={StaticResource BoolInvertConverter}}" />
                         <Slider Grid.Row="2" Grid.Column="2" Value="{Binding Settings.TimeInSeconds}" SmallChange="10" LargeChange="60" Minimum="1" Maximum="3600"/>
-                        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.TimeInSeconds, StringFormat={}{0:D4}}" />
+                        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.TimeInSeconds, StringFormat={}{0:D4}}" TextAlignment="Right" />
                     </Grid>
                 </GroupBox>
 
                 <TextBlock Text="Liczba cząsteczek" Grid.Row="4" Grid.Column="0" />
                 <Slider Grid.Row="4" Grid.Column="2" Value="{Binding Settings.ParticleCount}" Minimum="1" Maximum="20" SmallChange="1" LargeChange="5" />
-                <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.ParticleCount, StringFormat={}{0:D2}}" />
+                <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.ParticleCount, StringFormat={}{0:D2}}" TextAlignment="Right" />
+                
+                <TextBlock Text="Inercja" Grid.Row="6" Grid.Column="0" />
+                <Slider Grid.Row="6" Grid.Column="2" Value="{Binding Settings.Inertia}" Minimum="0" Maximum="1" SmallChange="0.01" LargeChange="0.1" />
+                <TextBox Grid.Row="6" Grid.Column="4" Text="{Binding Settings.Inertia, StringFormat={}{0:F4}}" TextAlignment="Right" />
             </Grid>
         </GroupBox>
         
@@ -97,15 +103,15 @@
                 
                 <TextBlock Text="c1" Grid.Row="0" Grid.Column="0"/>
                 <Slider Grid.Row="0" Grid.Column="2" Minimum="0" Maximum="4" Value="{Binding Settings.COneValue}" SmallChange="0.01" LargeChange="0.1" />
-                <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.COneValue, StringFormat={}{0:F4}}" />
+                <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.COneValue, StringFormat={}{0:F4}}" TextAlignment="Right" />
 
                 <TextBlock Text="c2" Grid.Row="2" Grid.Column="0"/>
                 <Slider Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="4" Value="{Binding Settings.CTwoValue}" SmallChange="0.01" LargeChange="0.1" />
-                <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.CTwoValue, StringFormat={}{0:F4}}" />
+                <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.CTwoValue, StringFormat={}{0:F4}}" TextAlignment="Right" />
 
                 <TextBlock Text="Vmax" Grid.Row="4" Grid.Column="0"/>
                 <Slider Grid.Row="4" Grid.Column="2" Minimum="0" Maximum="100" Value="{Binding Settings.MaxSpeed}" SmallChange="1" LargeChange="5"/>
-                <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.MaxSpeed}"/>
+                <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.MaxSpeed}" TextAlignment="Right" />
             </Grid>
         </GroupBox>
         
