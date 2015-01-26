@@ -104,6 +104,20 @@ namespace PSO.DataModels
             }
         }
 
+        decimal _inertia;
+        public decimal Inertia
+        {
+            get { return _inertia; }
+            set
+            {
+                if (_inertia == value)
+                    return;
+
+                _inertia = value;
+                RaisePropertyChanged();
+            }
+        }
+
         int _maxSpeed;
         public int MaxSpeed
         {

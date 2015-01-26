@@ -2,10 +2,10 @@
 Program na zaliczenie przedmiotu "Zaawansowane Metody Inteligencji
 Obliczeniowej" wykonuj¹cy optymalizacjê stadn¹ cz¹steczek (ang. PSO) dla funkcji wielowymiarowych. 
 
-### Wymagana funkcjonalnoœæ
+### Funkcjonalnoœæ
 - Wykres zbie¿noœci
 - Wybór ró¿nych funkcji wielowymiarowych (np. Rastrigina)
-- Animacja optymalizacji funkcji
+- Optymalizacja funkcji wielowymiarowych
 
 ### Teoria
 
@@ -27,19 +27,17 @@ Przyk³adowe programy PSO innych osób:
 ### Technologia
 
 ##### GUI
-* WPF 
-* GnuPlot
+* WPF
+* [OxyPlot] (wykresy) 
 
 ##### Jêzyk Programowania
 * C#
 
 ##### Wzorce
-* MVVM?
+* MVVM
 
-### Do zrobienia
-
- - Przeczytaæ teorie!
- - Zaimplementowaæ algorytm PSO bez GUI
+##### Framework
+* [PRISM]
 
 ### Licencja
 
@@ -53,3 +51,5 @@ MIT
 [prezentacja]:https://prezi.com/kibgc8wd2ae3/pso/
 [referat Pawe³ Szo³tysek]:http://www.szoltysek.eu/works/pso.pdf
 [referat Wojciech Kwed³o]:http://aragorn.pb.bialystok.pl/~wkwedlo/EA6.pdf
+[OxyPlot]:http://oxyplot.org/
+[PRISM]:http://prism.codeplex.com/
