@@ -58,6 +58,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -67,17 +69,21 @@
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="c1" Grid.Row="0" Grid.Column="0"/>
+                <TextBlock Text="Inercja" Grid.Row="0" Grid.Column="0"/>
                 <Slider Grid.Row="0" Grid.Column="2"/>
                 <TextBlock Grid.Row="0" Grid.Column="4" />
 
-                <TextBlock Text="c2" Grid.Row="2" Grid.Column="0"/>
+                <TextBlock Text="C1" Grid.Row="2" Grid.Column="0"/>
                 <Slider Grid.Row="2" Grid.Column="2"/>
                 <TextBlock Grid.Row="2" Grid.Column="4" />
 
-                <TextBlock Text="Vmax" Grid.Row="4" Grid.Column="0"/>
+                <TextBlock Text="C2" Grid.Row="4" Grid.Column="0"/>
                 <Slider Grid.Row="4" Grid.Column="2"/>
                 <TextBlock Grid.Row="4" Grid.Column="4" />
+
+                <TextBlock Text="Vmax" Grid.Row="6" Grid.Column="0"/>
+                <Slider Grid.Row="6" Grid.Column="2"/>
+                <TextBlock Grid.Row="6" Grid.Column="4" />
             </Grid>
         </GroupBox>
         

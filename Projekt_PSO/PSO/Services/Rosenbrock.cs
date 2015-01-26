@@ -9,7 +9,7 @@ namespace PSO.Services
 {
     public class Rosenbrock : Function
     {
-         public Rosenbrock(double[] x) : base(x) { }
+        public Rosenbrock(double[] x) : base(x) { }
 
         // http://www.sfu.ca/~ssurjano/rosen.html
         public override double Evaluate()

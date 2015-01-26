@@ -12,7 +12,7 @@ namespace PSO.Services
         public Ackley(double[] x) : base(x) { }
 
         // http://www.sfu.ca/~ssurjano/ackley.html
-        public double Evaluate()
+        public override double Evaluate()
         {
             int a = 20;
             double b = 0.2;

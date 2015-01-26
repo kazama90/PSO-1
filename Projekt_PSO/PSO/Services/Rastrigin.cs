@@ -11,7 +11,7 @@ namespace PSO.Services.Interfaces
         public Rastrigin(double[] x) : base(x) { }
 
         // http://www.sfu.ca/~ssurjano/rastr.html
-        public double Evaluate()
+        public override double Evaluate()
         {
             double sum = 0;
             for(int i = 0; i < Dimension; i++)

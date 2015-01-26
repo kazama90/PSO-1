@@ -40,6 +40,20 @@ namespace PSO.DataModels
             }
         }
 
+        decimal _inertia;
+        public decimal Inertia
+        {
+            get { return _inertia; }
+            set
+            {
+                if (_inertia == value)
+                    return;
+
+                _inertia = value;
+                RaisePropertyChanged();
+            }
+        }
+
         decimal _cOneValue;
         public decimal COneValue
         {
