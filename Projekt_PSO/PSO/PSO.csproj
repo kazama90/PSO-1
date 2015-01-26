@@ -73,6 +73,10 @@
     <Compile Include="Constants\RibbonNames.cs" />
     <Compile Include="Events\GeneratePlotEvent.cs" />
     <Compile Include="Events\Payloads\GeneratePlotPayload.cs" />
+    <Compile Include="Services\Ackley.cs" />
+    <Compile Include="Services\Interfaces\Function.cs" />
+    <Compile Include="Services\Rastrigin.cs" />
+    <Compile Include="Services\Rosenbrock.cs" />
     <Compile Include="ViewModels\PlotVM.cs" />
     <Compile Include="ViewModels\SettingsVM.cs" />
     <Compile Include="Views\PlotView.xaml.cs">
@@ -102,9 +106,7 @@
       <Name>Infrastruktura</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
