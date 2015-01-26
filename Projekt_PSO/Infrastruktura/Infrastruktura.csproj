@@ -57,6 +57,7 @@
     <Compile Include="Common\BaseClasses\BaseView.cs" />
     <Compile Include="Common\BaseClasses\BaseVM.cs" />
     <Compile Include="Common\EnumHelper.cs" />
+    <Compile Include="Common\Converters\InvertBooleanConverter.cs" />
     <Compile Include="Common\MathFuncDescAttribute.cs" />
     <Compile Include="Common\PropertyChangedImplementation.cs" />
     <Compile Include="Common\ResourceHelper.cs" />

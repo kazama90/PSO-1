@@ -35,7 +35,6 @@ namespace PSO.ViewModels
 
         #region Properties
 
-        object _backgroundImg;
         public object BackgroundImg
         {
             get
@@ -75,7 +74,11 @@ namespace PSO.ViewModels
             }
         }
 
-        AlgorithmSettings Settings { get; set; }
+        AlgorithmSettings _settings;
+        public AlgorithmSettings Settings
+        {
+            get { return _settings ?? (_settings = new AlgorithmSettings()); }
+        }
 
         #endregion Properties
 

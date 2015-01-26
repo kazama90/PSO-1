@@ -12,7 +12,21 @@ namespace PSO.DataModels
     {
         public MathFunctions MathFunction { get; set; }
 
-        int _particleCount;
+        bool _isLiczbaIteracji;
+        public bool IsLiczbaIteracji
+        {
+            get { return _isLiczbaIteracji; }
+            set
+            {
+                if (_isLiczbaIteracji == value)
+                    return;
+
+                _isLiczbaIteracji = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        int _particleCount = 1;
         public int ParticleCount
         {
             get { return _particleCount; }
@@ -26,7 +40,7 @@ namespace PSO.DataModels
             }
         }
 
-        int _iterationCount;
+        int _iterationCount = 1;
         public int IterationCount
         {
             get { return _iterationCount; }
@@ -36,12 +50,30 @@ namespace PSO.DataModels
                     return;
 
                 _iterationCount = value;
+                _isLiczbaIteracji = true;
                 RaisePropertyChanged();
+                RaisePropertyChanged(() => IsLiczbaIteracji);
             }
         }
 
-        decimal _cOneValue;
-        public decimal COneValue
+        int _timeInSeconds = 1;
+        public int TimeInSeconds
+        {
+            get { return _timeInSeconds; }
+            set
+            {
+                if (_timeInSeconds == value)
+                    return;
+
+                _timeInSeconds = value;
+                _isLiczbaIteracji = false;
+                RaisePropertyChanged();
+                RaisePropertyChanged(() => IsLiczbaIteracji);
+            }
+        }
+
+        double _cOneValue = 2;
+        public double COneValue
         {
             get { return _cOneValue; }
             set
@@ -50,12 +82,14 @@ namespace PSO.DataModels
                     return;
 
                 _cOneValue = value;
+                _cTwoValue = 4 - value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(() => CTwoValue);
             }
         }
 
-        decimal _cTwoValue;
-        public decimal CTwoValue
+        double _cTwoValue = 2;
+        public double CTwoValue
         {
             get { return _cTwoValue; }
             set
@@ -64,6 +98,22 @@ namespace PSO.DataModels
                     return;
 
                 _cTwoValue = value;
+                _cOneValue = 4 - value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(() => COneValue);
+            }
+        }
+
+        int _maxSpeed;
+        public int MaxSpeed
+        {
+            get { return _maxSpeed; }
+            set
+            {
+                if (_maxSpeed == value)
+                    return;
+
+                _maxSpeed = value;
                 RaisePropertyChanged();
             }
         }

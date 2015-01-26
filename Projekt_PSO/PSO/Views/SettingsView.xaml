@@ -2,8 +2,13 @@
           xmlns:v="clr-namespace:Infrastruktura.Common.BaseClasses;assembly=Infrastruktura"
           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-          xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:inv="clr-namespace:Infrastruktura.Common.Converters;assembly=Infrastruktura">
+    <v:BaseView.Resources>
+        <ResourceDictionary>
+            <inv:InvertBooleanConverter x:Key="BoolInvertConverter" />
+        </ResourceDictionary>
+    </v:BaseView.Resources>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="{Binding BackgroundImg, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Opacity="0.3"/>
@@ -15,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <!-- Funkcje -->
-        <GroupBox Grid.Row="0" Header="Funkcje" Margin="5,0,5,5" Padding="3">
+        <GroupBox Grid.Row="0" Header="Ustawienia główne" Margin="5,0,5,5" Padding="3">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -29,7 +34,7 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="70"/>
                 </Grid.ColumnDefinitions>
                 
                 <TextBlock Text="Funkcja" Grid.Row="0" Grid.Column="0"/>
@@ -39,13 +44,34 @@
                           SelectedValuePath="Value"
                           DisplayMemberPath="Description"/>
                 
-                <TextBlock Text="Liczba iteracji" Grid.Row="2" Grid.Column="0"/>
-                <Slider Grid.Row="2" Grid.Column="2" Value="{Binding Settings.IterationCount}"/>
-                <TextBlock Grid.Row="2" Grid.Column="4" />
+                <GroupBox Header="Czas wykonywania" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="-9,0,-9,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <RadioButton GroupName="rbCzasWykGroup" Content="Liczba iteracji" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Settings.IsLiczbaIteracji}"/>
+                        <Slider Grid.Row="0" Grid.Column="2" Value="{Binding Settings.IterationCount}" SmallChange="1000" LargeChange="100000" Minimum="1" Maximum="1000000000"/>
+                        <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.IterationCount, StringFormat={}{0:D10}}" />
 
-                <TextBlock Text="Liczba cząsteczek" Grid.Row="4" Grid.Column="0"/>
-                <Slider Grid.Row="4" Grid.Column="2"/>
-                <TextBlock Grid.Row="4" Grid.Column="4" />
+                        <RadioButton GroupName="rbCzasWykGroup" Content="Czas (sekundy)" Grid.Row="2" Grid.Column="0" IsChecked="{Binding Settings.IsLiczbaIteracji, Converter={StaticResource BoolInvertConverter}}" />
+                        <Slider Grid.Row="2" Grid.Column="2" Value="{Binding Settings.TimeInSeconds}" SmallChange="10" LargeChange="60" Minimum="1" Maximum="3600"/>
+                        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.TimeInSeconds, StringFormat={}{0:D4}}" />
+                    </Grid>
+                </GroupBox>
+
+                <TextBlock Text="Liczba cząsteczek" Grid.Row="4" Grid.Column="0" />
+                <Slider Grid.Row="4" Grid.Column="2" Value="{Binding Settings.ParticleCount}" Minimum="1" Maximum="20" SmallChange="1" LargeChange="5" />
+                <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.ParticleCount, StringFormat={}{0:D2}}" />
             </Grid>
         </GroupBox>
         
@@ -64,20 +90,20 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="70"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="c1" Grid.Row="0" Grid.Column="0"/>
-                <Slider Grid.Row="0" Grid.Column="2"/>
-                <TextBlock Grid.Row="0" Grid.Column="4" />
+                <Slider Grid.Row="0" Grid.Column="2" Minimum="0" Maximum="4" Value="{Binding Settings.COneValue}" SmallChange="0.01" LargeChange="0.1" />
+                <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.COneValue, StringFormat={}{0:F4}}" />
 
                 <TextBlock Text="c2" Grid.Row="2" Grid.Column="0"/>
-                <Slider Grid.Row="2" Grid.Column="2"/>
-                <TextBlock Grid.Row="2" Grid.Column="4" />
+                <Slider Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="4" Value="{Binding Settings.CTwoValue}" SmallChange="0.01" LargeChange="0.1" />
+                <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.CTwoValue, StringFormat={}{0:F4}}" />
 
                 <TextBlock Text="Vmax" Grid.Row="4" Grid.Column="0"/>
-                <Slider Grid.Row="4" Grid.Column="2"/>
-                <TextBlock Grid.Row="4" Grid.Column="4" />
+                <Slider Grid.Row="4" Grid.Column="2" Minimum="0" Maximum="100" Value="{Binding Settings.MaxSpeed}" SmallChange="1" LargeChange="5"/>
+                <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.MaxSpeed}"/>
             </Grid>
         </GroupBox>
         
@@ -90,8 +116,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
-                <CheckBox Content="Ścisk" Grid.Row="0" Grid.Column="0"/>
+
+                <CheckBox Content="Ścisk" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Settings.Tightness}"/>
             </Grid>
         </GroupBox>
     </Grid>

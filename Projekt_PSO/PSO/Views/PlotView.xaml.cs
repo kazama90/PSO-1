@@ -26,11 +26,6 @@ namespace PSO.Views
             : base(viewModel)
         {
             InitializeComponent();
-
-            //this.Loaded += (s, e) =>
-            //{
-            //    this.DataContext = viewModel;
-            //};
         }
     }
 }
