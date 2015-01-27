@@ -54,7 +54,7 @@ namespace PSO.Services
                 List<DataPoint> bestPos = new List<DataPoint>();
                 for (int i = 0; i < settings.IterationCount; i++)
                 {
-                    if (bestPos.Count == settings.IterationCount / 10 && settings.IsLivePlot)
+                    if (settings.IsLivePlot && bestPos.Count == settings.IterationCount / 10)
                     {
                         castedPayload.UpdatePlotFunction(bestPos);
                         bestPos = new List<DataPoint>();
@@ -81,9 +81,10 @@ namespace PSO.Services
                     bestPos.Add(new DataPoint(i++, p.BestFitness));
                     p.Iteration();
 
-                    if (bestPos.Count == 10000 && settings.IsLivePlot)
+                    if (settings.IsLivePlot && i % 5000 == 0)
                     {
                         castedPayload.UpdatePlotFunction(bestPos);
+                        Thread.Sleep(150);
                         bestPos = new List<DataPoint>();
                     }
                 }

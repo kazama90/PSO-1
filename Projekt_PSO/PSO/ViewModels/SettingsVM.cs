@@ -143,7 +143,7 @@ namespace PSO.ViewModels
                             {
                                 new LineSeries
                                 {
-                                    Title = EnumHelper.Description(Settings.MathFunction),
+                                    Title = EnumHelper.Description(MathFunction),
                                     ItemsSource = param
                                 }
                             }

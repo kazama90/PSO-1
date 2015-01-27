@@ -17,7 +17,7 @@
                 Opacity=".7"
                 Panel.ZIndex="2"
                 Visibility="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolToVisConverter}}">
-            <TextBlock Text="Counting!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"/>
+            <TextBlock Text="Trwa obliczanie" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"/>
         </Border >
         <Grid Panel.ZIndex="1">
             <Grid.Background>
@@ -126,8 +126,8 @@
                     <TextBox Grid.Row="4" Grid.Column="4" IsEnabled="{Binding Settings.Tightness, Converter={StaticResource BoolInvertConverter}}" Text="{Binding Settings.MaxSpeed, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
 
                     <TextBlock Text="Ścisk" Grid.Row="6" Grid.Column="0"/>
-                    <Slider Grid.Row="6" Grid.Column="2" IsEnabled="{Binding Settings.Tightness}" Minimum="0" Maximum="1" Value="{Binding Settings.TightnessLevel}" SmallChange="0.01" LargeChange="0.1"/>
-                    <TextBox Grid.Row="6" Grid.Column="4" IsEnabled="{Binding Settings.Tightness}" Text="{Binding Settings.TightnessLevel, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
+                    <Slider Grid.Row="6" Grid.Column="2" IsEnabled="{Binding Settings.Tightness}" Minimum="0.0001" Maximum="1" Value="{Binding Settings.TightnessLevel}" SmallChange="0.01" LargeChange="0.1"/>
+                    <TextBox Grid.Row="6" Grid.Column="4" IsEnabled="{Binding Settings.Tightness}" Text="{Binding Settings.TightnessLevel, StringFormat={}{0:F4}, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
                 </Grid>
             </GroupBox>
         
@@ -143,7 +143,8 @@
                     </Grid.RowDefinitions>
 
                     <CheckBox Content="Ścisk" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Settings.Tightness}"/>
-                    <CheckBox Content="Wykres na żywo" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Settings.IsLivePlot}"/>
+                    <CheckBox Content="Wykres na żywo" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Settings.IsLivePlot}"
+                              ToolTip="Funkcjonalność testowa! Wyraźnie spowalania pracę algorytmu. W trakcie aktualizacji wykresu mogą wystąpić problemy."/>
                 </Grid>
             </GroupBox>
         </Grid>

@@ -55,7 +55,7 @@ namespace PSO.DataModels
             }
         }
 
-        int _timeInSeconds = 10;
+        int _timeInSeconds = 5;
         public int TimeInSeconds
         {
             get { return _timeInSeconds; }
