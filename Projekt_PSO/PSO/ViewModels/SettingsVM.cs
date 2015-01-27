@@ -116,6 +116,7 @@ namespace PSO.ViewModels
                     ?? (_startStopCommand = new DelegateCommand(StartStopCommandExecute, StartStopCommandCanExecute));
             }
         }
+
         void StartStopCommandExecute()
         {
             this.EventAggregator.GetEvent<GeneratePlotEvent>().Publish(
@@ -148,10 +149,9 @@ namespace PSO.ViewModels
                             },
                             Title = "funkcja 2"
                         }
-                    }
+                    },
+                    AddPoints = false
                 });
-
-            //System.Windows.MessageBox.Show("button zadziałał");
         }
         bool StartStopCommandCanExecute()
         {

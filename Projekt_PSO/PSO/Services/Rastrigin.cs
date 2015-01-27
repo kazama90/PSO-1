@@ -36,6 +36,5 @@ namespace PSO.Services.Interfaces
                 return 5.12;
             }
         }
-
     }
 }

@@ -51,7 +51,7 @@ namespace PSO.ViewModels
 
         private void GeneratePlotEventHandler(GeneratePlotPayload obj)
         {
-            GeneratePlot(obj.Title, obj.LineSeries);
+            GeneratePlot(obj.Title, obj.LineSeries, obj.AddPoints);
         }
 
         #endregion Event handlers
@@ -82,14 +82,26 @@ namespace PSO.ViewModels
             ClearPlotCommand.RaiseCanExecuteChanged();
         }
 
-        private void GeneratePlot(string title, List<LineSeries> lineSeries)
+        private void GeneratePlot(string title, List<LineSeries> lineSeries, bool isAddingPoints)
         {
-            ConvergencePlot = new PlotModel();
-            ConvergencePlot.Title = title;
+            if (!isAddingPoints)
+            {
+                ConvergencePlot = new PlotModel();
+                ConvergencePlot.Title = title;
 
-            foreach (var serie in lineSeries)
-                this.ConvergencePlot.Series.Add(serie);
-            this.ConvergencePlot.InvalidatePlot(true);
+                foreach (var serie in lineSeries)
+                    this.ConvergencePlot.Series.Add(serie);
+                this.ConvergencePlot.InvalidatePlot(true);
+            }
+            else
+            {
+                foreach (var serie in lineSeries)
+                {
+                    var lineSeriesItemsSource = (this.ConvergencePlot.Series.First(x => x.Title == serie.Title) as LineSeries).ItemsSource;
+                    foreach (DataPoint item in serie.ItemsSource)
+                        (lineSeriesItemsSource as List<DataPoint>).Add(item);
+                }
+            }
         }
 
         #endregion Methods
