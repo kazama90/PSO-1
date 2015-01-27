@@ -21,14 +21,12 @@ namespace PSO.Algorithm
         #endregion
 
         #region Ctor
-        public Particle(double[] position, double[] velocity, double fitness)
+        public Particle(double[] position, double[] velocity)
         {
             Position = position;
             Velocity = velocity;
-            Fitness = fitness;
-            BestFitness = double.MaxValue;
+            BestFitness = Double.MaxValue;
             BestPosition = new double[Position.Length];
-            UpdateBestPosition();
         }
         #endregion
 

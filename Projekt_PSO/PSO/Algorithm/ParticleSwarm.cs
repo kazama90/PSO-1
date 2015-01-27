@@ -10,8 +10,11 @@ namespace PSO
 {
     public class ParticleSwarm
     {
+        #region Fields
         static Random rnd = new Random();
+        #endregion
 
+        #region Properties
         public bool UseTightness { get; private set; }
         public double COneValue { get; private set; }
         public double CTwoValue { get; private set; }
@@ -25,7 +28,9 @@ namespace PSO
         public int IterationCount { get; private set; }
         public int Dimension { get; private set; }
         public double Vmax { get; private set; }
+        #endregion
 
+        #region Ctor
         public ParticleSwarm(int swarmSize, int iterationCount, Function function, double inertia, double cOneValue, double cTwoValue, double vmax, bool useTightness, double? tigthness = null)
         {
             SwarmSize = swarmSize;
@@ -39,13 +44,14 @@ namespace PSO
             Tightness = tigthness;
 
             Dimension = 3;
-            BestFitness = double.MaxValue;
+            BestFitness = Double.MaxValue;
             BestPosition = new double[Dimension];
 
             InitializeParticles();
-
         }
+        #endregion Ctor
 
+        #region Private Methods
         private void InitializeParticles()
         {
             Particles = new List<Particle>();
@@ -74,24 +80,75 @@ namespace PSO
                     randomParticleVelocity[k] = NextDouble(minVelocity, maxVelocity);
                 }
 
-                Particles.Add(new Particle(randomParticlePosition, randomParticleVelocity, OptimizationFunction.Evaluate(randomParticlePosition)));
-                
+                Particles.Add(new Particle(randomParticlePosition, randomParticleVelocity));
+     
             }
         }
 
-        double NextDouble(double min, double max)
+        private double NextDouble(double min, double max)
         {
             if (min >= max)
                 throw new ArgumentOutOfRangeException();
             return rnd.NextDouble() * (Math.Abs(max - min)) + min;
         }
 
+        private double CorrectVelocityToVmax(double velocity)
+        {
+            if (velocity < -1 * Vmax)
+            {
+                return -1 * Vmax;
+            }
+            else if (velocity > Vmax)
+            {
+                return Vmax;
+            }
+            else
+            {
+                return velocity;
+            }
+        }
+
+        private double CorrectPositionToDomain(double x)
+        {
+            if (x < OptimizationFunction.LowerBound)
+            {
+                return OptimizationFunction.LowerBound;
+            }
+            else if (x > OptimizationFunction.UpperBound)
+            {
+                return OptimizationFunction.UpperBound;
+            }
+            else
+            {
+                return x;
+            }
+        }
+
+        private void UpdateParticleBestPosition(Particle p)
+        {
+            double particleFitness = OptimizationFunction.Evaluate(p.Position);
+            p.UpdateFitness(particleFitness);
+            p.UpdateBestPosition();
+        }
+
+        private void UpdateGlobalBestPosition(Particle p)
+        {
+            if (p.BestFitness < this.BestFitness)
+            {
+                this.BestFitness = p.BestFitness;
+                p.Position.CopyTo(this.BestPosition, 0);
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
         public void Iteration()
         {
             foreach (Particle p in Particles)
             {
-                UpdateGlobalBestPosition(p);
                 UpdateParticleBestPosition(p);
+                UpdateGlobalBestPosition(p);
             }
 
             foreach (Particle p in Particles)
@@ -139,55 +196,6 @@ namespace PSO
 
             }
         }
-
-
-
-        private double CorrectVelocityToVmax(double velocity)
-        {
-             if (velocity < -1 * Vmax)
-             {
-                 return -1 * Vmax;
-             }
-             else if (velocity > Vmax)
-             {
-                 return Vmax;
-             }
-             else
-             {
-                 return velocity;
-             }
-        }
-
-        private double CorrectPositionToDomain(double x)
-        {
-            if (x < OptimizationFunction.LowerBound)
-            {
-                return OptimizationFunction.LowerBound;
-            }
-            else if (x > OptimizationFunction.UpperBound)
-            {
-                return OptimizationFunction.UpperBound;
-            }
-            else
-            {
-                return x;
-            }
-        }
-
-        private void UpdateParticleBestPosition(Particle p)
-        {
-            double particleFitness = OptimizationFunction.Evaluate(p.Position);
-            p.UpdateFitness(particleFitness);
-            p.UpdateBestPosition();
-        }
-
-        private void UpdateGlobalBestPosition(Particle p)
-        {
-            if (p.BestFitness < this.BestFitness)
-            {
-                this.BestFitness = p.BestFitness;
-                p.Position.CopyTo(this.BestPosition, 0);
-            }
-        }
+        #endregion
     }
 }
