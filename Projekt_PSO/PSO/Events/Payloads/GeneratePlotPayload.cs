@@ -18,9 +18,5 @@ namespace PSO.Events.Payloads
         /// Collection of series of points
         /// </summary>
         public List<LineSeries> LineSeries { get; set; }
-        /// <summary>
-        /// Set to true to add points to the plot; set to false to generate a new plot
-        /// </summary>
-        public bool AddPoints { get; set; }
     }
 }

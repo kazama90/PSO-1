@@ -1,4 +1,6 @@
-﻿using Infrastruktura.Interfaces;
+﻿using Infrastruktura.Events;
+using Infrastruktura.Events.Payloads;
+using Infrastruktura.Interfaces;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using System;
@@ -50,6 +52,20 @@ namespace Infrastruktura.Common.BaseClasses
             }
         }
 
+        bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (_isBusy == value)
+                    return;
+
+                _isBusy = value;
+                RaisePropertyChanged();
+            }
+        }
+
         protected IUnityContainer Container { get; set; }
 
         protected IEventAggregator GlobalEventAggregator { get; set; }
@@ -62,9 +78,27 @@ namespace Infrastruktura.Common.BaseClasses
 
         #region Methods
 
-        public virtual void Initialize() { }
+        public virtual void Initialize()
+        {
+            this.EventAggregator.GetEvent<AsyncOperationEvent>().Subscribe(OnAsyncOperationEventHandler, ThreadOption.PublisherThread);
+        }
+
+        public virtual void ClosingView()
+        {
+            this.EventAggregator.GetEvent<AsyncOperationEvent>().Unsubscribe(OnAsyncOperationEventHandler);
+        }
 
         public virtual void RefreshView() { }
+
+        private void OnAsyncOperationEventHandler(AsyncOperationPayload payload)
+        {
+            if (payload.OperationState == AsyncOperationState.Started)
+                IsBusy = true;
+            else
+                IsBusy = false;
+
+            this.RefreshView();
+        }
 
         #endregion Methods
     }

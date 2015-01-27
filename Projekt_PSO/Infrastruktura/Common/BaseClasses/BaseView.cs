@@ -17,6 +17,7 @@ namespace Infrastruktura.Common.BaseClasses
             {
                 this.DataContext = viewModel;
             };
+            Unloaded += ClosingView;
             Loaded += InitialLoad;
         }
 
@@ -28,6 +29,16 @@ namespace Infrastruktura.Common.BaseClasses
                 viewModel.Initialize();
 
             Loaded -= InitialLoad;
+        }
+
+        void ClosingView(object sender, RoutedEventArgs e)
+        {
+            var viewModel = this.DataContext as BaseVM;
+
+            if (viewModel != null)
+                viewModel.ClosingView();
+
+            Unloaded -= ClosingView;
         }
     }   
 }

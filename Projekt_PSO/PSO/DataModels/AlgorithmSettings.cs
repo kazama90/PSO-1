@@ -26,7 +26,7 @@ namespace PSO.DataModels
             }
         }
 
-        int _particleCount = 1;
+        int _particleCount = 15;
         public int ParticleCount
         {
             get { return _particleCount; }
@@ -40,7 +40,7 @@ namespace PSO.DataModels
             }
         }
 
-        int _iterationCount = 1;
+        int _iterationCount = 10000;
         public int IterationCount
         {
             get { return _iterationCount; }
@@ -50,13 +50,12 @@ namespace PSO.DataModels
                     return;
 
                 _iterationCount = value;
-                _isLiczbaIteracji = true;
+                IsLiczbaIteracji = true;
                 RaisePropertyChanged();
-                RaisePropertyChanged(() => IsLiczbaIteracji);
             }
         }
 
-        int _timeInSeconds = 1;
+        int _timeInSeconds = 10;
         public int TimeInSeconds
         {
             get { return _timeInSeconds; }
@@ -66,9 +65,8 @@ namespace PSO.DataModels
                     return;
 
                 _timeInSeconds = value;
-                _isLiczbaIteracji = false;
+                IsLiczbaIteracji = false;
                 RaisePropertyChanged();
-                RaisePropertyChanged(() => IsLiczbaIteracji);
             }
         }
 
@@ -102,7 +100,7 @@ namespace PSO.DataModels
             }
         }
 
-        double _inertia;
+        double _inertia = 0.76;
         public double Inertia
         {
             get { return _inertia; }
@@ -116,7 +114,7 @@ namespace PSO.DataModels
             }
         }
 
-        int _maxSpeed;
+        int _maxSpeed = 1;
         public int MaxSpeed
         {
             get { return _maxSpeed; }
@@ -144,7 +142,7 @@ namespace PSO.DataModels
             }
         }
 
-        double _tightnessLevel;
+        double _tightnessLevel = 0.01;
         public double TightnessLevel
         {
             get { return _tightnessLevel; }
@@ -154,6 +152,20 @@ namespace PSO.DataModels
                     return;
 
                 _tightnessLevel = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        bool _isLivePlot = true;
+        public bool IsLivePlot
+        {
+            get { return _isLivePlot; }
+            set
+            {
+                if (_isLivePlot == value)
+                    return;
+
+                _isLivePlot = value;
                 RaisePropertyChanged();
             }
         }

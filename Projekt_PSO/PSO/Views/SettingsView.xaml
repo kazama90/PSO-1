@@ -7,132 +7,145 @@
     <v:BaseView.Resources>
         <ResourceDictionary>
             <inv:InvertBooleanConverter x:Key="BoolInvertConverter" />
+            <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
         </ResourceDictionary>
     </v:BaseView.Resources>
     <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="{Binding BackgroundImg, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Opacity="0.3"/>
-        </Grid.Background>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Border HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="DarkGray"
+                Opacity=".7"
+                Panel.ZIndex="2"
+                Visibility="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolToVisConverter}}">
+            <TextBlock Text="Counting!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"/>
+        </Border >
+        <Grid Panel.ZIndex="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="{Binding BackgroundImg, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Opacity="0.3"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- Funkcje -->
-        <GroupBox Grid.Row="0" Header="Ustawienia główne" Margin="5,0,5,5" Padding="3">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="70"/>
-                </Grid.ColumnDefinitions>
+            <!-- Funkcje -->
+            <GroupBox Grid.Row="0" Header="Ustawienia główne" Margin="5,0,5,5" Padding="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
                 
-                <TextBlock Text="Funkcja" Grid.Row="0" Grid.Column="0"/>
-                <ComboBox Grid.Row="0" Grid.Column="2"
-                          ItemsSource="{Binding Path=MathFunctionsList}"
-                          SelectedValue="{Binding MathFunction}"
-                          SelectedValuePath="Value"
-                          DisplayMemberPath="Description"/>
+                    <TextBlock Text="Funkcja" Grid.Row="0" Grid.Column="0"/>
+                    <ComboBox Grid.Row="0" Grid.Column="2"
+                              ItemsSource="{Binding Path=MathFunctionsList}"
+                              SelectedValue="{Binding MathFunction}"
+                              SelectedValuePath="Value"
+                              DisplayMemberPath="Description"/>
                 
-                <GroupBox Header="Czas wykonywania" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="-9,0,-9,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="70"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                    <GroupBox Header="Czas wykonywania" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="-9,0,-9,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
                         
-                        <RadioButton GroupName="rbCzasWykGroup" Content="Liczba iteracji" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Settings.IsLiczbaIteracji}"/>
-                        <Slider Grid.Row="0" Grid.Column="2" Value="{Binding Settings.IterationCount}" SmallChange="1000" LargeChange="100000" Minimum="1" Maximum="1000000000"/>
-                        <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.IterationCount, StringFormat={}{0:D10}}" TextAlignment="Right" />
+                            <RadioButton GroupName="rbCzasWykGroup" Content="Liczba iteracji" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Settings.IsLiczbaIteracji}"/>
+                            <Slider Grid.Row="0" Grid.Column="2" Value="{Binding Settings.IterationCount, UpdateSourceTrigger=PropertyChanged}" SmallChange="1000" LargeChange="100000" Minimum="1" Maximum="1000000000"/>
+                            <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.IterationCount, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:D10}}" TextAlignment="Right" />
 
-                        <RadioButton GroupName="rbCzasWykGroup" Content="Czas (sekundy)" Grid.Row="2" Grid.Column="0" IsChecked="{Binding Settings.IsLiczbaIteracji, Converter={StaticResource BoolInvertConverter}}" />
-                        <Slider Grid.Row="2" Grid.Column="2" Value="{Binding Settings.TimeInSeconds}" SmallChange="10" LargeChange="60" Minimum="1" Maximum="3600"/>
-                        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.TimeInSeconds, StringFormat={}{0:D4}}" TextAlignment="Right" />
-                    </Grid>
-                </GroupBox>
+                            <RadioButton GroupName="rbCzasWykGroup" Content="Czas (sekundy)" Grid.Row="2" Grid.Column="0" IsChecked="{Binding Settings.IsLiczbaIteracji, Converter={StaticResource BoolInvertConverter}}" />
+                            <Slider Grid.Row="2" Grid.Column="2" Value="{Binding Settings.TimeInSeconds}" SmallChange="10" LargeChange="60" Minimum="1" Maximum="3600"/>
+                            <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.TimeInSeconds, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:D4}}" TextAlignment="Right" />
+                        </Grid>
+                    </GroupBox>
 
-                <TextBlock Text="Liczba cząsteczek" Grid.Row="4" Grid.Column="0" />
-                <Slider Grid.Row="4" Grid.Column="2" Value="{Binding Settings.ParticleCount}" Minimum="1" Maximum="20" SmallChange="1" LargeChange="5" />
-                <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.ParticleCount, StringFormat={}{0:D2}}" TextAlignment="Right" />
+                    <TextBlock Text="Liczba cząsteczek" Grid.Row="4" Grid.Column="0" />
+                    <Slider Grid.Row="4" Grid.Column="2" Value="{Binding Settings.ParticleCount}" Minimum="1" Maximum="20" SmallChange="1" LargeChange="5" />
+                    <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.ParticleCount, StringFormat={}{0:D2}}" TextAlignment="Right" />
                 
-                <TextBlock Text="Inercja" Grid.Row="6" Grid.Column="0" />
-                <Slider Grid.Row="6" Grid.Column="2" Value="{Binding Settings.Inertia}" Minimum="0" Maximum="1" SmallChange="0.01" LargeChange="0.1" />
-                <TextBox Grid.Row="6" Grid.Column="4" Text="{Binding Settings.Inertia, StringFormat={}{0:F4}}" TextAlignment="Right" />
-            </Grid>
-        </GroupBox>
+                    <TextBlock Text="Inercja" Grid.Row="6" Grid.Column="0" />
+                    <Slider Grid.Row="6" Grid.Column="2" Value="{Binding Settings.Inertia}" Minimum="0" Maximum="1" SmallChange="0.01" LargeChange="0.1" />
+                    <TextBox Grid.Row="6" Grid.Column="4" Text="{Binding Settings.Inertia, StringFormat={}{0:F4}}" TextAlignment="Right" />
+                </Grid>
+            </GroupBox>
         
-        <!-- Parametry -->
-        <GroupBox Grid.Row="1" Header="Parametry" Margin="5,0,5,5" Padding="3">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="70"/>
-                </Grid.ColumnDefinitions>
+            <!-- Parametry -->
+            <GroupBox Grid.Row="1" Header="Parametry" Margin="5,0,5,5" Padding="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
                 
-                <TextBlock Text="c1" Grid.Row="0" Grid.Column="0"/>
-                <Slider Grid.Row="0" Grid.Column="2" Minimum="0" Maximum="4" Value="{Binding Settings.COneValue}" SmallChange="0.01" LargeChange="0.1" />
-                <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.COneValue, StringFormat={}{0:F4}}" TextAlignment="Right" />
+                    <TextBlock Text="c1" Grid.Row="0" Grid.Column="0"/>
+                    <Slider Grid.Row="0" Grid.Column="2" Minimum="0" Maximum="4" Value="{Binding Settings.COneValue, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.01" LargeChange="0.1" />
+                    <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Settings.COneValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F4}}" TextAlignment="Right" />
 
-                <TextBlock Text="c2" Grid.Row="2" Grid.Column="0"/>
-                <Slider Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="4" Value="{Binding Settings.CTwoValue}" SmallChange="0.01" LargeChange="0.1" />
-                <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.CTwoValue, StringFormat={}{0:F4}}" TextAlignment="Right" />
+                    <TextBlock Text="c2" Grid.Row="2" Grid.Column="0"/>
+                    <Slider Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="4" Value="{Binding Settings.CTwoValue, UpdateSourceTrigger=PropertyChanged}" SmallChange="0.01" LargeChange="0.1" />
+                    <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.CTwoValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F4}}" TextAlignment="Right" />
 
-                <TextBlock Text="Vmax" Grid.Row="4" Grid.Column="0"/>
-                <Slider Grid.Row="4" Grid.Column="2" IsEnabled="{Binding Settings.Tightness, Converter={StaticResource BoolInvertConverter}}" Minimum="0" Maximum="100" Value="{Binding Settings.MaxSpeed}" SmallChange="1" LargeChange="5"/>
-                <TextBox Grid.Row="4" Grid.Column="4" IsEnabled="{Binding Settings.Tightness, Converter={StaticResource BoolInvertConverter}}" Text="{Binding Settings.MaxSpeed, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
+                    <TextBlock Text="Vmax" Grid.Row="4" Grid.Column="0"/>
+                    <Slider Grid.Row="4" Grid.Column="2" IsEnabled="{Binding Settings.Tightness, Converter={StaticResource BoolInvertConverter}}" Minimum="1" Maximum="100" Value="{Binding Settings.MaxSpeed}" SmallChange="1" LargeChange="5"/>
+                    <TextBox Grid.Row="4" Grid.Column="4" IsEnabled="{Binding Settings.Tightness, Converter={StaticResource BoolInvertConverter}}" Text="{Binding Settings.MaxSpeed, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
 
-                <TextBlock Text="Ścisk" Grid.Row="6" Grid.Column="0"/>
-                <Slider Grid.Row="6" Grid.Column="2" IsEnabled="{Binding Settings.Tightness}" Minimum="0" Maximum="1" Value="{Binding Settings.TightnessLevel}" SmallChange="0.01" LargeChange="0.1"/>
-                <TextBox Grid.Row="6" Grid.Column="4" IsEnabled="{Binding Settings.Tightness}" Text="{Binding Settings.TightnessLevel, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
-            </Grid>
-        </GroupBox>
+                    <TextBlock Text="Ścisk" Grid.Row="6" Grid.Column="0"/>
+                    <Slider Grid.Row="6" Grid.Column="2" IsEnabled="{Binding Settings.Tightness}" Minimum="0" Maximum="1" Value="{Binding Settings.TightnessLevel}" SmallChange="0.01" LargeChange="0.1"/>
+                    <TextBox Grid.Row="6" Grid.Column="4" IsEnabled="{Binding Settings.Tightness}" Text="{Binding Settings.TightnessLevel, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
+                </Grid>
+            </GroupBox>
         
-        <!-- Dodatki -->
-        <GroupBox Grid.Row="2" Header="Dodatkowe ustawienia" Margin="5,0,5,5" Padding="3">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <!-- Dodatki -->
+            <GroupBox Grid.Row="2" Header="Dodatkowe ustawienia" Margin="5,0,5,5" Padding="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <CheckBox Content="Ścisk" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Settings.Tightness}"/>
-            </Grid>
-        </GroupBox>
+                    <CheckBox Content="Ścisk" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Settings.Tightness}"/>
+                    <CheckBox Content="Wykres na żywo" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Settings.IsLivePlot}"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </v:BaseView>

@@ -51,7 +51,10 @@ namespace PSO.ViewModels
 
         private void GeneratePlotEventHandler(GeneratePlotPayload obj)
         {
-            GeneratePlot(obj.Title, obj.LineSeries, obj.AddPoints);
+            if (obj == null)
+                ConvergencePlot = null;
+            else
+                GeneratePlot(obj.Title, obj.LineSeries);
         }
 
         #endregion Event handlers
@@ -82,41 +85,29 @@ namespace PSO.ViewModels
             ClearPlotCommand.RaiseCanExecuteChanged();
         }
 
-        private void GeneratePlot(string title, List<LineSeries> lineSeries, bool isAddingPoints)
+        private void GeneratePlot(string title, List<LineSeries> lineSeries)
         {
-            //if (!isAddingPoints)
-            //{
-            //    ConvergencePlot = new PlotModel();
-            //    ConvergencePlot.Title = title;
+            if (ConvergencePlot == null)
+            {
+                ConvergencePlot = new PlotModel();
+                ConvergencePlot.Title = title;
+            }
 
-            //    foreach (var serie in lineSeries)
-            //        this.ConvergencePlot.Series.Add(serie);
-            //    this.ConvergencePlot.InvalidatePlot(true);
-            //}
-            //else
-            //{
-                //if (ConvergencePlot == null)
-                //{
-                    ConvergencePlot = new PlotModel();
-                    ConvergencePlot.Title = title;
-                //}
-
-                foreach (var serie in lineSeries)
+            foreach (var serie in lineSeries)
+            {
+                if (ConvergencePlot.Series.FirstOrDefault(x => x.Title == serie.Title) == null)
                 {
-                    if (ConvergencePlot.Series.FirstOrDefault(x => x.Title == serie.Title) == null)
-                    {
-                        this.ConvergencePlot.Series.Add(serie);
-                    }
-                    else
-                    {
-                        var lineSeriesItemsSource = (this.ConvergencePlot.Series.First(x => x.Title == serie.Title) as LineSeries).ItemsSource;
-                        foreach (DataPoint item in serie.ItemsSource)
-                            (lineSeriesItemsSource as List<DataPoint>).Add(item);
-                    }
-
-                    this.ConvergencePlot.InvalidatePlot(true);
+                    this.ConvergencePlot.Series.Add(serie);
                 }
-            //}
+                else
+                {
+                    var lineSeriesItemsSource = (this.ConvergencePlot.Series.First(x => x.Title == serie.Title) as LineSeries).ItemsSource;
+
+                    (lineSeriesItemsSource as List<DataPoint>).AddRange(serie.ItemsSource as List<DataPoint>);
+                }
+
+                this.ConvergencePlot.InvalidatePlot(true);
+            }
         }
 
         #endregion Methods
@@ -139,7 +130,7 @@ namespace PSO.ViewModels
         }
         bool ClearPlotCommandCanExecute()
         {
-            return ConvergencePlot != null;
+            return ConvergencePlot != null && !IsBusy;
         }
 
         #endregion Commands

@@ -1,5 +1,7 @@
 ﻿using Infrastruktura.Common;
 using Infrastruktura.Common.BaseClasses;
+using Infrastruktura.Events;
+using Infrastruktura.Events.Payloads;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
@@ -93,6 +95,8 @@ namespace PSO.ViewModels
 
         public override void Initialize()
         {
+            base.Initialize();
+
             var tab = this.Ribbon.GetOrCreateTab(RibbonNames.ControlTab, "Sterowanie PSO");
             var group = tab.GetOrCreateGroup(RibbonNames.StartStopGroup, "Sterowanie");
             group.AddControl(new RibbonButton
@@ -102,6 +106,11 @@ namespace PSO.ViewModels
                 LargeImageSource = ResourceHelper.GetImage(this.GetType().Namespace, "start.png"),
                 Command = StartStopCommand
             });
+        }
+
+        public override void RefreshView()
+        {
+            StartStopCommand.RaiseCanExecuteChanged();
         }
 
         #endregion Methods
@@ -120,82 +129,36 @@ namespace PSO.ViewModels
 
         void StartStopCommandExecute()
         {
+            EventAggregator.GetEvent<GeneratePlotEvent>().Publish(null);
+
             PSOService psoService = new PSOService();
             psoService.RunAsync(new AsyncPsoPayload(this.Settings,
-                (double[] param) =>
+                (List<DataPoint> param) =>
                 {
-                    List<DataPoint> dataPoints= new List<DataPoint>();
-
-                    for(int i = 0; i < param.Count(); i++)
-                        dataPoints.Add(new DataPoint(i, param[i]));
-
                     EventAggregator.GetEvent<GeneratePlotEvent>().Publish(
                         new GeneratePlotPayload
                         {
                             Title = "Wykres zbieżności",
-                            AddPoints = true,
                             LineSeries = new List<LineSeries>
                             {
                                 new LineSeries
                                 {
-                                    ItemsSource = dataPoints
+                                    Title = EnumHelper.Description(Settings.MathFunction),
+                                    ItemsSource = param
                                 }
                             }
                         });
+                },
+                () =>
+                {
+                    EventAggregator.GetEvent<AsyncOperationEvent>().Publish(new AsyncOperationPayload { OperationState = AsyncOperationState.Stopped });
                 }));
 
-            //this.EventAggregator.GetEvent<GeneratePlotEvent>().Publish(
-            //    new GeneratePlotPayload
-            //    {
-            //        Title = "Wykres zbieżności",
-            //        LineSeries = new List<LineSeries>
-            //        {
-            //            new LineSeries
-            //            {
-            //                ItemsSource = new List<DataPoint>
-            //                {
-            //                    new DataPoint(1,1),
-            //                    new DataPoint(2,2),
-            //                    new DataPoint(3,5),
-            //                    new DataPoint(4,9),
-            //                    new DataPoint(5,14)
-            //                },
-            //                Title = "funkcja 1"
-            //            },
-            //            new LineSeries
-            //            {
-            //                ItemsSource = new List<DataPoint>
-            //                {
-            //                    new DataPoint(0,1),
-            //                    new DataPoint(1,3),
-            //                    new DataPoint(1,5),
-            //                    new DataPoint(2,7),
-            //                    new DataPoint(2,9)
-            //                },
-            //                Title = "funkcja 2"
-            //            }
-            //        },
-            //        AddPoints = false
-            //    });
+            EventAggregator.GetEvent<AsyncOperationEvent>().Publish(new AsyncOperationPayload { OperationState = AsyncOperationState.Started });
         }
         bool StartStopCommandCanExecute()
         {
-            return true;
-        }
-
-        DelegateCommand _tloCommand;
-        public DelegateCommand TloCommand
-        {
-             get
-             {
-                 return _tloCommand ?? (_tloCommand = new DelegateCommand(() =>
-                 {
-                     //if (BackgroundImg == null)
-                     //    BackgroundImg = ResourceHelper.GetImage(this.GetType().Namespace, "rastrigin.png");
-                     //else
-                     //    BackgroundImg = null;
-                 }));
-             }
+            return !IsBusy;
         }
 
         #endregion Commands

@@ -1,4 +1,5 @@
-﻿using PSO.DataModels;
+﻿using OxyPlot;
+using PSO.DataModels;
 using PSO.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -50,13 +51,21 @@ namespace PSO.Services
 
             if (settings.IsLiczbaIteracji)
             {
-                List<double> bestPos = new List<double>();
+                List<DataPoint> bestPos = new List<DataPoint>();
                 for (int i = 0; i < settings.IterationCount; i++)
                 {
-                    bestPos.Add(p.BestFitness);
+                    if (bestPos.Count == settings.IterationCount / 10 && settings.IsLivePlot)
+                    {
+                        castedPayload.UpdatePlotFunction(bestPos);
+                        bestPos = new List<DataPoint>();
+                    }
+
+                    bestPos.Add(new DataPoint(i, p.BestFitness));
                     p.Iteration();
                 }
-                castedPayload.UpdatePlotFunction(bestPos.ToArray());
+
+                if (bestPos.Count > 0)
+                    castedPayload.UpdatePlotFunction(bestPos);
             }
             else
             {
@@ -65,33 +74,46 @@ namespace PSO.Services
                 _timer.Elapsed += (s, e) => { isRunning = false; };
                 _timer.Start();
 
-                List<double> bestPos = new List<double>();
+                List<DataPoint> bestPos = new List<DataPoint>();
+                int i = 0;
                 while (isRunning)
                 {
-                    bestPos.Add(p.BestFitness);
+                    bestPos.Add(new DataPoint(i++, p.BestFitness));
                     p.Iteration();
+
+                    if (bestPos.Count == 10000 && settings.IsLivePlot)
+                    {
+                        castedPayload.UpdatePlotFunction(bestPos);
+                        bestPos = new List<DataPoint>();
+                    }
                 }
 
-                castedPayload.UpdatePlotFunction(bestPos.ToArray());
+                if (bestPos.Count > 0)
+                    castedPayload.UpdatePlotFunction(bestPos);
             }
+
+            castedPayload.CalculationFinished();
         }
 
         public void RunAsync(AsyncPsoPayload settings)
         {
             Thread thdPso = new Thread(new ParameterizedThreadStart(Run));
+            var temp = thdPso.ThreadState;
             thdPso.Start(settings);
         }
     }
 
     public class AsyncPsoPayload
     {
-        public AsyncPsoPayload(AlgorithmSettings settings, Action<double[]> updatePlotFunc)
+        public AsyncPsoPayload(AlgorithmSettings settings, Action<List<DataPoint>> updatePlotFunc, Action calculationFinished)
         {
             this.Settings = settings;
             this.UpdatePlotFunction = updatePlotFunc;
+            this.CalculationFinished = calculationFinished;
         }
 
         public AlgorithmSettings Settings { get; set; }
-        public Action<double[]> UpdatePlotFunction { get; set; }
+        public Action<List<DataPoint>> UpdatePlotFunction { get; set; }
+        public Action CalculationFinished { get; set; }
     }
 }
