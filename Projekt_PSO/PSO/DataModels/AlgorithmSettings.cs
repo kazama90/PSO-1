@@ -82,9 +82,8 @@ namespace PSO.DataModels
                     return;
 
                 _cOneValue = value;
-                _cTwoValue = 4 - value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(() => CTwoValue);
+                CTwoValue = 4 - value;
             }
         }
 
@@ -98,14 +97,13 @@ namespace PSO.DataModels
                     return;
 
                 _cTwoValue = value;
-                _cOneValue = 4 - value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(() => COneValue);
+                COneValue = 4 - value;
             }
         }
 
-        decimal _inertia;
-        public decimal Inertia
+        double _inertia;
+        public double Inertia
         {
             get { return _inertia; }
             set
@@ -142,6 +140,20 @@ namespace PSO.DataModels
                     return;
 
                 _tightness = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        double _tightnessLevel;
+        public double TightnessLevel
+        {
+            get { return _tightnessLevel; }
+            set
+            {
+                if (_tightnessLevel == value)
+                    return;
+
+                _tightnessLevel = value;
                 RaisePropertyChanged();
             }
         }

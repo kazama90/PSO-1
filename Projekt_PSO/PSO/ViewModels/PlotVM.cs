@@ -84,24 +84,39 @@ namespace PSO.ViewModels
 
         private void GeneratePlot(string title, List<LineSeries> lineSeries, bool isAddingPoints)
         {
-            if (!isAddingPoints)
-            {
-                ConvergencePlot = new PlotModel();
-                ConvergencePlot.Title = title;
+            //if (!isAddingPoints)
+            //{
+            //    ConvergencePlot = new PlotModel();
+            //    ConvergencePlot.Title = title;
+
+            //    foreach (var serie in lineSeries)
+            //        this.ConvergencePlot.Series.Add(serie);
+            //    this.ConvergencePlot.InvalidatePlot(true);
+            //}
+            //else
+            //{
+                //if (ConvergencePlot == null)
+                //{
+                    ConvergencePlot = new PlotModel();
+                    ConvergencePlot.Title = title;
+                //}
 
                 foreach (var serie in lineSeries)
-                    this.ConvergencePlot.Series.Add(serie);
-                this.ConvergencePlot.InvalidatePlot(true);
-            }
-            else
-            {
-                foreach (var serie in lineSeries)
                 {
-                    var lineSeriesItemsSource = (this.ConvergencePlot.Series.First(x => x.Title == serie.Title) as LineSeries).ItemsSource;
-                    foreach (DataPoint item in serie.ItemsSource)
-                        (lineSeriesItemsSource as List<DataPoint>).Add(item);
+                    if (ConvergencePlot.Series.FirstOrDefault(x => x.Title == serie.Title) == null)
+                    {
+                        this.ConvergencePlot.Series.Add(serie);
+                    }
+                    else
+                    {
+                        var lineSeriesItemsSource = (this.ConvergencePlot.Series.First(x => x.Title == serie.Title) as LineSeries).ItemsSource;
+                        foreach (DataPoint item in serie.ItemsSource)
+                            (lineSeriesItemsSource as List<DataPoint>).Add(item);
+                    }
+
+                    this.ConvergencePlot.InvalidatePlot(true);
                 }
-            }
+            //}
         }
 
         #endregion Methods

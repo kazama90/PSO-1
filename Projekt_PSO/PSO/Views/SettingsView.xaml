@@ -92,6 +92,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -110,8 +112,12 @@
                 <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Settings.CTwoValue, StringFormat={}{0:F4}}" TextAlignment="Right" />
 
                 <TextBlock Text="Vmax" Grid.Row="4" Grid.Column="0"/>
-                <Slider Grid.Row="4" Grid.Column="2" Minimum="0" Maximum="100" Value="{Binding Settings.MaxSpeed}" SmallChange="1" LargeChange="5"/>
-                <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding Settings.MaxSpeed}" TextAlignment="Right" />
+                <Slider Grid.Row="4" Grid.Column="2" IsEnabled="{Binding Settings.Tightness, Converter={StaticResource BoolInvertConverter}}" Minimum="0" Maximum="100" Value="{Binding Settings.MaxSpeed}" SmallChange="1" LargeChange="5"/>
+                <TextBox Grid.Row="4" Grid.Column="4" IsEnabled="{Binding Settings.Tightness, Converter={StaticResource BoolInvertConverter}}" Text="{Binding Settings.MaxSpeed, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
+
+                <TextBlock Text="Ścisk" Grid.Row="6" Grid.Column="0"/>
+                <Slider Grid.Row="6" Grid.Column="2" IsEnabled="{Binding Settings.Tightness}" Minimum="0" Maximum="1" Value="{Binding Settings.TightnessLevel}" SmallChange="0.01" LargeChange="0.1"/>
+                <TextBox Grid.Row="6" Grid.Column="4" IsEnabled="{Binding Settings.Tightness}" Text="{Binding Settings.TightnessLevel, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" />
             </Grid>
         </GroupBox>
         

@@ -25,16 +25,14 @@ namespace PSO
         public List<Particle> Particles { get; private set; }
         public Function OptimizationFunction { get; private set; }
         public int SwarmSize { get; private set; }
-        public int IterationCount { get; private set; }
         public int Dimension { get; private set; }
         public double Vmax { get; private set; }
         #endregion
 
         #region Ctor
-        public ParticleSwarm(int swarmSize, int iterationCount, Function function, double inertia, double cOneValue, double cTwoValue, double vmax, bool useTightness, double? tigthness = null)
+        public ParticleSwarm(int swarmSize, Function function, double inertia, double cOneValue, double cTwoValue, double vmax, bool useTightness, double? tigthness = null)
         {
             SwarmSize = swarmSize;
-            IterationCount = iterationCount;
             Inertia = inertia;
             COneValue = cOneValue;
             CTwoValue = cTwoValue;
@@ -87,8 +85,6 @@ namespace PSO
 
         private double NextDouble(double min, double max)
         {
-            if (min >= max)
-                throw new ArgumentOutOfRangeException();
             return rnd.NextDouble() * (Math.Abs(max - min)) + min;
         }
 
@@ -168,7 +164,7 @@ namespace PSO
                         double cognitiveWeight = COneValue * firstRnd * (p.BestPosition[i] - p.Position[i]);
                         double socialWeight = CTwoValue * secondRnd * (this.BestPosition[i] - p.Position[i]);
 
-                        newVelocity[i] = (double)Tightness * (p.Velocity[i] + cognitiveWeight + socialWeight);
+                        newVelocity[i] = (double)Tightness * p.Velocity[i] + cognitiveWeight + socialWeight;
                     }
 
                     // Bez scisku - inercja + vmax

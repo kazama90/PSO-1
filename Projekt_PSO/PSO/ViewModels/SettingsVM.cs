@@ -10,6 +10,7 @@ using PSO.DataModels;
 using PSO.Enums;
 using PSO.Events;
 using PSO.Events.Payloads;
+using PSO.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,39 +120,63 @@ namespace PSO.ViewModels
 
         void StartStopCommandExecute()
         {
-            this.EventAggregator.GetEvent<GeneratePlotEvent>().Publish(
-                new GeneratePlotPayload
+            PSOService psoService = new PSOService();
+            psoService.RunAsync(new AsyncPsoPayload(this.Settings,
+                (double[] param) =>
                 {
-                    Title = "Wykres zbieżności",
-                    LineSeries = new List<LineSeries>
-                    {
-                        new LineSeries
+                    List<DataPoint> dataPoints= new List<DataPoint>();
+
+                    for(int i = 0; i < param.Count(); i++)
+                        dataPoints.Add(new DataPoint(i, param[i]));
+
+                    EventAggregator.GetEvent<GeneratePlotEvent>().Publish(
+                        new GeneratePlotPayload
                         {
-                            ItemsSource = new List<DataPoint>
+                            Title = "Wykres zbieżności",
+                            AddPoints = true,
+                            LineSeries = new List<LineSeries>
                             {
-                                new DataPoint(1,1),
-                                new DataPoint(2,2),
-                                new DataPoint(3,5),
-                                new DataPoint(4,9),
-                                new DataPoint(5,14)
-                            },
-                            Title = "funkcja 1"
-                        },
-                        new LineSeries
-                        {
-                            ItemsSource = new List<DataPoint>
-                            {
-                                new DataPoint(0,1),
-                                new DataPoint(1,3),
-                                new DataPoint(1,5),
-                                new DataPoint(2,7),
-                                new DataPoint(2,9)
-                            },
-                            Title = "funkcja 2"
-                        }
-                    },
-                    AddPoints = false
-                });
+                                new LineSeries
+                                {
+                                    ItemsSource = dataPoints
+                                }
+                            }
+                        });
+                }));
+
+            //this.EventAggregator.GetEvent<GeneratePlotEvent>().Publish(
+            //    new GeneratePlotPayload
+            //    {
+            //        Title = "Wykres zbieżności",
+            //        LineSeries = new List<LineSeries>
+            //        {
+            //            new LineSeries
+            //            {
+            //                ItemsSource = new List<DataPoint>
+            //                {
+            //                    new DataPoint(1,1),
+            //                    new DataPoint(2,2),
+            //                    new DataPoint(3,5),
+            //                    new DataPoint(4,9),
+            //                    new DataPoint(5,14)
+            //                },
+            //                Title = "funkcja 1"
+            //            },
+            //            new LineSeries
+            //            {
+            //                ItemsSource = new List<DataPoint>
+            //                {
+            //                    new DataPoint(0,1),
+            //                    new DataPoint(1,3),
+            //                    new DataPoint(1,5),
+            //                    new DataPoint(2,7),
+            //                    new DataPoint(2,9)
+            //                },
+            //                Title = "funkcja 2"
+            //            }
+            //        },
+            //        AddPoints = false
+            //    });
         }
         bool StartStopCommandCanExecute()
         {
