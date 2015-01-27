@@ -8,18 +8,17 @@ namespace PSO.Services.Interfaces
 {
     public class Rastrigin : Function
     {
-        public Rastrigin(double[] x) : base(x) { }
-
         // http://www.sfu.ca/~ssurjano/rastr.html
-        public override double Evaluate()
+        public override double Evaluate(double[] x)
         {
+            int dimension = x.Length;
             double sum = 0;
-            for(int i = 0; i < Dimension; i++)
+            for(int i = 0; i < dimension; i++)
             {
-                sum += Math.Pow(X[i], 2) - 10 * Math.Cos(2 * Math.PI * X[i]); 
+                sum += Math.Pow(x[i], 2) - 10 * Math.Cos(2 * Math.PI * x[i]); 
             }
 
-            return 10 * Dimension + sum;
+            return 10 * dimension + sum;
         }
 
         public override double LowerBound

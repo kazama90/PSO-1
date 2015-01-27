@@ -9,24 +9,23 @@ namespace PSO.Services
 {
     public class Ackley : Function
     {
-        public Ackley(double[] x) : base(x) { }
-
         // http://www.sfu.ca/~ssurjano/ackley.html
-        public override double Evaluate()
+        public override double Evaluate(double[] x)
         {
+            int dimension = x.Length;
             int a = 20;
             double b = 0.2;
             double c = 2 * Math.PI;
             double leftSum = 0;
             double rightSum = 0;
-            for(int i = 0; i < Dimension; i++)
+            for(int i = 0; i < dimension; i++)
             {
-                leftSum += Math.Pow(X[i], 2);
-                rightSum += Math.Cos(c*X[i]);
+                leftSum += Math.Pow(x[i], 2);
+                rightSum += Math.Cos(c*x[i]);
             }
 
-            double leftBracket = (b * -1) * Math.Sqrt((1 / Dimension) * leftSum);
-            double rightBracket = (1 / Dimension) * rightSum;
+            double leftBracket = (b * -1) * Math.Sqrt((1 / dimension) * leftSum);
+            double rightBracket = (1 / dimension) * rightSum;
 
             return (a * -1) * Math.Exp(leftBracket) - (Math.Exp(rightBracket)) + a + Math.Exp(1); 
 

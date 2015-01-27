@@ -9,19 +9,18 @@ namespace PSO.Services
 {
     public class Rosenbrock : Function
     {
-        public Rosenbrock(double[] x) : base(x) { }
-
         // http://www.sfu.ca/~ssurjano/rosen.html
-        public override double Evaluate()
+        public override double Evaluate(double[] x)
         {
+            int dimension = x.Length;
             double sum = 0;
             double leftBracket = 0;
             double rightBracket = 0;
 
-            for(int i=0; i < Dimension - 1; i++)
+            for(int i=0; i < dimension - 1; i++)
             {
-                leftBracket = Math.Pow(X[i + 1] - Math.Pow(X[i], 2), 2);
-                rightBracket = Math.Pow(X[i] - 1, 2);
+                leftBracket = Math.Pow(x[i + 1] - Math.Pow(x[i], 2), 2);
+                rightBracket = Math.Pow(x[i] - 1, 2);
                 sum += (100 * leftBracket) + rightBracket;
             }
 
